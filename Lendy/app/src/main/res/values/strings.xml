@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key">none</string>
+    <string name="app_name">Lendy</string>
+    <string name="com_lendy_preference_file_key" translatable="false">com.mobsuccess.skratchy</string>
+</resources>

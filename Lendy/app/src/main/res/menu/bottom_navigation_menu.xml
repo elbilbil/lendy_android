@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_ongle_1"
+        android:icon="@drawable/ic_home_button"
+        android:title="Accueil" />
+
+
+    <item
+        android:id="@+id/action_ongle_2"
+        android:icon="@drawable/tabbar_icon_search_unselected"
+        android:title="Recherche" />
+
+    <item
+        android:id="@+id/action_ongle_3"
+        android:icon="@drawable/tabbar_icon_car_theft"
+        android:title="Carte" />
+
+    <item
+        android:id="@+id/action_ongle_4"
+        android:icon="@drawable/tabbar_icon_talk_selected"
+        android:title="Message" />
+
+    <item
+        android:id="@+id/action_ongle_5"
+        android:icon="@drawable/tabbar_icon_account_unselected"
+        android:title="Profil" />
+</menu>
