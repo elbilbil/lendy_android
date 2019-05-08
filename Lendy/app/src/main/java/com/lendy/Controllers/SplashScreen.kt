@@ -17,23 +17,25 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        performRoutine()
+        if (DataUtils.readStringFromPreferences(this, "address") == "default" || DataUtils.readStringFromPreferences(this, "password") == "default") {
+            startActivity(Intent(this.applicationContext, ConnectActivity::class.java))
+            finish()
+        } else {
+            performRoutine()
+        }
     }
 
-    fun performRoutine()
-    {
+    fun performRoutine() {
         //startActivity(Intent(applicationContext, ConnectActivity::class.java))
         //finish()
         DataManager.loginUser(this, DataUtils.readStringFromPreferences(this, "address"), DataUtils.readStringFromPreferences(this, "password"), callback = { success ->
-            if (success)
-            {
+            if (success) {
                 //DataUtils.writeStringOnPreferences(this, "address", DataManager.SharedData.sharedUser?.username)
                 //DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)
                 //DataUtils.writeStringOnPreferences(this, "token", DataManager.SharedData.sharedUser?.token)
                 startActivity(Intent(this.applicationContext, MainActivity::class.java))
                 finish()
-            }
-            else {
+            } else {
                 /*this.runOnUiThread {
                     AlertDialog.Builder(this)
                             .setTitle("Impossible de se connecter")
