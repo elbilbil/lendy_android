@@ -38,7 +38,7 @@ class ConnectActivity : AppCompatActivity() {
                         DataUtils.progressHide(progressdialog)
                     }
                     if (success) {
-                        DataUtils.writeStringOnPreferences(this, "address", DataManager.SharedData.sharedUser?.username)
+                        DataUtils.writeStringOnPreferences(this, "username", DataManager.SharedData.sharedUser?.username)
                         DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)
                         startActivity(Intent(this.applicationContext, MainActivity::class.java))
                         finish()

@@ -32,6 +32,8 @@ class ChoiceActivity : AppCompatActivity() {
                 }
                 if (success && newuser != null) {
                     DataUtils.writeStringOnPreferences(this, "token", newuser.token)
+                    DataUtils.writeStringOnPreferences(this, "username", DataManager.SharedData.sharedUser?.username)
+                    DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)
                     startActivity(i)
                     finish()
                 } else
@@ -51,6 +53,8 @@ class ChoiceActivity : AppCompatActivity() {
                 }
                 if (success && newuser != null) {
                     DataUtils.writeStringOnPreferences(this, "token", newuser.token)
+                    DataUtils.writeStringOnPreferences(this, "username", DataManager.SharedData.sharedUser?.username)
+                    DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)
                     startActivity(i)
                     finish()
                 } else

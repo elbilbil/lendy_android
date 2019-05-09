@@ -17,7 +17,7 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        if (DataUtils.readStringFromPreferences(this, "address") == "default" || DataUtils.readStringFromPreferences(this, "password") == "default") {
+        if (DataUtils.readStringFromPreferences(this, "username") == "default" || DataUtils.readStringFromPreferences(this, "password") == "default") {
             startActivity(Intent(this.applicationContext, ConnectActivity::class.java))
             finish()
         } else {
@@ -28,7 +28,7 @@ class SplashScreen : AppCompatActivity() {
     fun performRoutine() {
         //startActivity(Intent(applicationContext, ConnectActivity::class.java))
         //finish()
-        DataManager.loginUser(this, DataUtils.readStringFromPreferences(this, "address"), DataUtils.readStringFromPreferences(this, "password"), callback = { success ->
+        DataManager.loginUser(this, DataUtils.readStringFromPreferences(this, "username"), DataUtils.readStringFromPreferences(this, "password"), callback = { success ->
             if (success) {
                 //DataUtils.writeStringOnPreferences(this, "address", DataManager.SharedData.sharedUser?.username)
                 //DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)

@@ -47,8 +47,10 @@ public class ChooseDateDialog extends AlertDialog.Builder {
         });
 
         validate.setOnClickListener(v -> {
-            dialogResult.getDialogResult(dateString, index);
-            this.alertDialog.dismiss();
+            if (dateString != null && index != null) {
+                dialogResult.getDialogResult(dateString, index);
+                this.alertDialog.dismiss();
+            }
         });
         return alertDialog;
     }
