@@ -54,14 +54,17 @@
                         app:srcCompat="@drawable/avatar_placeholder" />
 
                     <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/profilname"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="10dp"
                         android:text="Paul"
                         android:textColor="@color/white"
-                        android:textSize="25dp"
+                        android:textSize="18dp"
+                        app:layout_constraintEnd_toStartOf="@+id/profilpicture"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,10 +72,10 @@
                         android:id="@+id/linearLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="20dp"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/name">
+                        app:layout_constraintTop_toBottomOf="@+id/profilname">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -105,7 +108,7 @@
                         android:id="@+id/avis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="20dp"
                         android:text="(123 avis)"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +119,7 @@
                         android:layout_width="260dp"
                         android:layout_height="120dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/rounded_border"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -206,6 +209,38 @@
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                    <Button
+                        android:id="@+id/contacter"
+                        android:layout_width="198dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/btn_generic_bleu"
+                        android:text="CONTACTER"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.495"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+                    <Button
+                        android:id="@+id/reserver"
+                        android:layout_width="198dp"
+                        android:layout_height="56dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/btn_generic_bleu"
+                        android:text="RESERVER"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.495"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/contacter" />
 
                 </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
