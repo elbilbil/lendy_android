@@ -24,7 +24,7 @@ import android.support.annotation.NonNull
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import com.lendy.R
-
+import android.support.v7.widget.DividerItemDecoration
 
 enum class Keys(val key: String) {
     PROPOSE("propose"),
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     var mapFragment: MapFragment? = null
     var researchFragment: ResearchFragment? = null
     var profileDetailFragment: ProfileDetailFragment? = null
+    var messageFragment: MessagesFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +85,15 @@ class MainActivity : AppCompatActivity() {
                                 addFragmentToActivity(fragmentManager, mapFragment, R.id.activity_main)
                             }
                             R.id.action_ongle_4 -> {
+                                val bundle = Bundle()
 
+                                //bundle.putSerializable("arrayLocations", listOfLocations)
+
+                                messageFragment = MessagesFragment()
+                                // set LegalsFragment Arguments
+                                //researchFragment!!.arguments = bundle
+
+                                addFragmentToActivity(fragmentManager, messageFragment, R.id.activity_main)
                             }
                             R.id.action_ongle_5 -> {
 
@@ -114,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             DataManager.SharedData.token = DataManager.SharedData.sharedUser?.token
         else {
             DataManager.SharedData.token = DataUtils.readStringFromPreferences(this, "token")
-            DataManager.getMyself(this, DataManager.SharedData.token, "address", DataUtils.readStringFromPreferences(this, "address"), callback =
+            DataManager.getMyself(this, DataManager.SharedData.token, "username", DataUtils.readStringFromPreferences(this, "username"), callback =
             { success ->
                 if (success) {
                     if (DataManager.SharedData.sharedUser?.type == "preteur") {
@@ -206,6 +215,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun removeMessagesFragment() {
+        if (this.messageFragment != null) {
+            removeFragment(messageFragment)
+            this.messageFragment = null
+        }
+    }
+
     fun recyclerInit(role: String?, users: ArrayList<Users>) {
         if (role == null)
             return
@@ -213,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         //recyclerview.layoutManager = LinearManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
         // Adapter changes cannot affect the size of the RecyclerView
         recyclerView.setHasFixedSize(true)
 
@@ -265,12 +281,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // DO Nothing
-        if (mapFragment != null || profileDetailFragment != null || researchFragment != null) {
+        if (mapFragment != null || profileDetailFragment != null || researchFragment != null || messageFragment != null) {
             fragmentManager.popBackStack()
             showBottomNavigation()
-        } else
-            finish()
+            bottom_navigation.selectedItemId = R.id.action_ongle_1
+        }
     }
 
 }
