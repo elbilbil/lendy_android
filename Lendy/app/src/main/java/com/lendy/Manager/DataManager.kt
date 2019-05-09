@@ -3,6 +3,7 @@ package com.lendy.Manager
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import com.lendy.Models.Discussion
 import com.lendy.Models.User
 import com.lendy.Models.Users
 import com.lendy.Utils.DataUtils
@@ -18,6 +19,7 @@ class DataManager
         var sharedUser: User? = null
         var sharedDrivers: ArrayList<Users>? = null
         var sharedLenders: ArrayList<Users>? = null
+        var sharedDiscussions: ArrayList<Discussion>? = null
         var token: String? = null
     }
 
@@ -43,19 +45,21 @@ class DataManager
             val userSave = User()
             var firstname: String? = null
             var lastname: String? = null
-            var address: String? = null
             var username: String? = null
             var password: String? = null
-            var isDriver: Boolean? = null
             var type: String? = null
+            var location: Any? = null
+            var sex: String? = null
+            var _id: String? = null
 
             userSave.firstname = user.firstname
             userSave.lastname = user.lastname
-            userSave.address = user.address
             userSave.username = user.username
             userSave.password = user.password
-            //userSave.isDriver = user.isDriver
             userSave.type = user.type
+            userSave.location = user.location
+            userSave.sex = user.sex
+            userSave._id = user._id
             SharedData.sharedUser = userSave
         }
 
@@ -135,6 +139,43 @@ class DataManager
                     callback.invoke(true)
                 }
             } )
+        }
+
+        fun sendMessage(context: Context?, token: String?, message: String?, contactId: String?, callback: (success: Boolean) -> Unit)
+        {
+            if (context == null || token == null || message == null || contactId == null)
+                return
+
+            ServiceProvider.sendMessage(context, token,  message, contactId, callback = {code ->
+
+                if (code != 200)
+                {
+                    Log.e("FAILED", "CANT LOGIN")
+                    callback.invoke(false)
+                }
+                else
+                {
+                    callback.invoke(true)
+                }
+            } )
+        }
+
+        fun getDiscussions(context: Context?, token: String?, callback: (success: Boolean, discussions: ArrayList<Discussion>?) -> Unit)
+        {
+            if (context == null || token == null)
+                return
+
+            ServiceProvider.getDiscussions(context, token, callback = { code, discussions ->
+                if (code == 200 && discussions != null)
+                {
+                    SharedData.sharedDiscussions = discussions
+                    callback.invoke(true, discussions)
+                }
+                else
+                {
+                    callback.invoke(false, null)
+                }
+            })
         }
 
         fun loginUser(context: Context?, email: String?, password:String?, callback: (success: Boolean) -> Unit)

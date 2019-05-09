@@ -1,15 +1,15 @@
 package com.lendy.Models
 
 import org.json.JSONObject
+import java.io.Serializable
 
-class Users
+class Users : Serializable
 {
     var firstname: String? = null
     var lastname: String? = null
-    var address: String? = null
+    var _id: String? = null
     var username: String? = null
     var password: String? = null
-    //var isDriver: Int? = null
     var type: String? = null
     var role: String? = null
     var status: String? = null
