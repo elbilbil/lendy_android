@@ -4,6 +4,7 @@ package com.lendy.Utils
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
+import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -16,6 +17,7 @@ import com.lendy.Controllers.MainActivity
 import com.lendy.Models.User
 import com.lendy.Models.Users
 import com.lendy.R
+import kotlinx.android.synthetic.main.user_list_elem.view.*
 
 /**
  * Class RankingAdapter , C'est ici que les données du RecyclerView vont être traitées
@@ -30,11 +32,19 @@ class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : 
 
         holder.container.setOnClickListener { v ->
             run {
+                val userInfos: HashMap<String?, Any?> = hashMapOf()
+                userInfos["description"] = holder.description?.text.toString()
+                userInfos["firstImage"] = holder.firstImage?.drawable
+                userInfos["user"] = arrayListOfElements[position]
                 // Faire en sorte que le fragment ProfileDetailFragment soit en premier plan et non en second plan derriere l'activity
                 //Ouvrir fragment au clic sur un élément en chargeant son contenu
                 //Faire le Search en cliquant dessus
+
                 if (activity is MainActivity) {
+                    val bundle = Bundle()
+                    bundle.putSerializable("infos", userInfos)
                     activity.profileDetailFragment = ProfileDetailFragment()
+                    activity.profileDetailFragment!!.arguments = bundle
                     addFragmentToActivity(activity.fragmentManager, activity.profileDetailFragment, R.id.activity_main)
                 }
             }

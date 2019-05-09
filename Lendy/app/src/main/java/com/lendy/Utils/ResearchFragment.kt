@@ -69,6 +69,16 @@ class ResearchFragment : Fragment() {
         vehiculespinner.setItems(array2)
         vehiculespinner.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener<String> { view, position, id, item -> itemSelected2 = item })
 
+        choose_date.setOnClickListener {
+            val datedialog = ChooseDateDialog(activity, interfaceDialog, 1)
+            datedialog.show()
+        }
+
+        choose_date2.setOnClickListener {
+            val datedialog = ChooseDateDialog(activity, interfaceDialog, 2)
+            datedialog.show()
+        }
+
         firstDate.setOnClickListener {
             val datedialog = ChooseDateDialog(activity, interfaceDialog, 1)
             datedialog.show()
