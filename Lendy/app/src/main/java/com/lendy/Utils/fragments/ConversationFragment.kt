@@ -1,4 +1,4 @@
-package com.lendy.Utils
+package com.lendy.Utils.fragments
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -17,21 +17,28 @@ import android.content.Intent.getIntent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.support.v4.app.NotificationCompat.getExtras
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import com.lendy.Models.Discussion
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.profiledetail.*
+import com.google.gson.Gson
+import android.content.Intent.getIntent
+import android.support.v7.widget.DividerItemDecoration
+import com.lendy.Models.Discussion
+import com.lendy.Models.Message
+import com.lendy.Utils.adapters.ConversationAdapter
+import com.lendy.Utils.adapters.MessagesAdapter
+import kotlinx.android.synthetic.main.conversation_fragment.*
+import kotlinx.android.synthetic.main.messages_fragment.*
 
-class MessagesFragment : Fragment() {
+
+class ConversationFragment : Fragment() {
 
     var currentActivity: Activity? = null
     var currentView: View? = null
-    var userInfo: HashMap<String?, Any?> = hashMapOf()
-    var user: Users? = null
+    var conversation_content: ArrayList<Message>? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.messages_fragment, container, false)
+        return inflater?.inflate(R.layout.conversation_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -42,25 +49,13 @@ class MessagesFragment : Fragment() {
         val cA = this.currentActivity
 
         val b = this.arguments
+        if (b.getSerializable("conversation_content") != null) {
+            conversation_content = b.getSerializable("conversation_content") as ArrayList<Message>?
+            recyclerInit(conversation_content)
+        }
 
-        DataManager.getDiscussions(currentActivity, DataManager.SharedData.token, callback = {success, discussions ->
-            if (success && discussions != null)
-            {
-                currentActivity!!.runOnUiThread {
-                    recyclerInit(discussions)
-                }
-            }
-            else
-            {
-                currentActivity!!.runOnUiThread {
-                    AlertDialog.Builder(this.currentActivity)
-                            .setTitle("Erreur")
-                            .setMessage("Erreur lors de la récupération des conversations, veuillez réessayer")
-                            .setPositiveButton("OK", null)
-                            .show()
-                }
-            }
-        })
+        if (cA is MainActivity)
+            cA.hideBottomNavigation()
     }
 
     override fun onAttach(context: Context?) {
@@ -94,16 +89,16 @@ class MessagesFragment : Fragment() {
         val cA = this.currentActivity
     }
 
-    fun recyclerInit(discussions: ArrayList<Discussion>?) {
-        if (discussions == null)
+    fun recyclerInit(discusssion_content: ArrayList<Message>?) {
+        if (discusssion_content == null || discusssion_content.size == 0) {
             return
-
-        recyclerView.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+        }
+        conversation.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
+        conversation.addItemDecoration(DividerItemDecoration(conversation.context, DividerItemDecoration.VERTICAL))
         // Adapter changes cannot affect the size of the RecyclerView
-        recyclerView.setHasFixedSize(true)
+        conversation.setHasFixedSize(true)
 
         // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
-        recyclerView.adapter = MessagesAdapter(discussions, currentActivity!!)
+        conversation.adapter = ConversationAdapter(discusssion_content, currentActivity!!)
     }
 }

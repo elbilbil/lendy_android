@@ -1,14 +1,12 @@
-package com.lendy.Utils
+package com.lendy.Utils.custom_views
 
 import android.app.Activity
-import android.content.Context
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.lendy.Manager.DataManager
-import com.lendy.Models.User
 import com.lendy.Models.Users
 
 import com.lendy.R

@@ -9,7 +9,7 @@ import android.os.Bundle
 import com.lendy.Manager.DataManager
 import com.lendy.R
 import com.lendy.Utils.DataUtils
-import com.lendy.Utils.RegisterFragment
+import com.lendy.Utils.fragments.RegisterFragment
 import com.lmntrx.android.library.livin.missme.ProgressDialog
 import kotlinx.android.synthetic.main.connect_activity.*
 

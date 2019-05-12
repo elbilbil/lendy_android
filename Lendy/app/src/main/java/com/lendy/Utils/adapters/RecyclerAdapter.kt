@@ -1,4 +1,5 @@
-package com.lendy.Utils
+package com.lendy.Utils.adapters
+
 
 import android.app.Activity
 import android.app.Fragment
@@ -6,22 +7,25 @@ import android.app.FragmentManager
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.lendy.Controllers.MainActivity
-import com.lendy.Models.User
 import com.lendy.Models.Users
 import com.lendy.R
-import kotlinx.android.synthetic.main.user_list_elem.view.*
+import com.lendy.Utils.fragments.ProfileDetailFragment
 
-class ConversationAdapter(val arrayListOfElements: ArrayList<Users>, val activity : Activity) : RecyclerView.Adapter<ConversationAdapter.ViewHolder>()
+/**
+ * Class RankingAdapter , C'est ici que les données du RecyclerView vont être traitées
+ * property: Class
+ * @param: arrayListOfElements: ArrayList of Object SKMRanking
+ * @param: activity : current activity
+ */
+class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : Activity) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()
 {
-
-    override fun onBindViewHolder(holder: ConversationAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.container.setOnClickListener { v ->
             run {

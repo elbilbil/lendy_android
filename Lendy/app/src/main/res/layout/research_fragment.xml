@@ -12,7 +12,8 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/white"
+        android:visibility="visible"
+        android:background="@drawable/rounded_border"
         android:windowSoftInputMode="adjustResize"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="@id/guideline5"
