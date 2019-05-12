@@ -19,12 +19,13 @@ import com.google.gson.JsonObject
 import com.lendy.Manager.DataManager
 import com.lendy.Models.Users
 import com.lendy.Utils.*
-import org.json.JSONObject
-import android.support.annotation.NonNull
 import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import com.lendy.R
 import android.support.v7.widget.DividerItemDecoration
+import com.lendy.Utils.adapters.RecyclerAdapter
+import com.lendy.Utils.custom_views.BottomNavigationViewHelper
+import com.lendy.Utils.fragments.*
 
 enum class Keys(val key: String) {
     PROPOSE("propose"),
@@ -39,10 +40,15 @@ class MainActivity : AppCompatActivity() {
     var researchFragment: ResearchFragment? = null
     var profileDetailFragment: ProfileDetailFragment? = null
     var messageFragment: MessagesFragment? = null
+    var conversationFragment: ConversationFragment? = null
+    var homeFragment: HomeFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        homeFragment = HomeFragment()
+        addFragmentToActivity(fragmentManager, homeFragment, R.id.activity_main)
 
         checkPermission()
         //initPubnub()
@@ -57,9 +63,19 @@ class MainActivity : AppCompatActivity() {
                         if (researchFragment != null && researchFragment?.isVisible!!)
                             removeResearchFragment()
 
+                        if (messageFragment != null && messageFragment?.isVisible!!)
+                            removeMessagesFragment()
+
+                        if (conversationFragment != null && conversationFragment?.isVisible!!)
+                            removeConversationFragment()
+
+                        if (homeFragment != null && homeFragment?.isVisible!!)
+                            removeHomeFragment()
+
                         when (item.itemId) {
                             R.id.action_ongle_1 -> {
-
+                                homeFragment = HomeFragment()
+                                addFragmentToActivity(fragmentManager, homeFragment, R.id.activity_main)
                             }
                             R.id.action_ongle_2 -> {
                                 val bundle = Bundle()
@@ -118,44 +134,6 @@ class MainActivity : AppCompatActivity() {
         //if (profileDetailFragment?.isVisible!!)
         //  removeProfileDetailFragment()
 
-
-        if (DataUtils.readStringFromPreferences(this, "token") == "default")
-            DataManager.SharedData.token = DataManager.SharedData.sharedUser?.token
-        else {
-            DataManager.SharedData.token = DataUtils.readStringFromPreferences(this, "token")
-            DataManager.getMyself(this, DataManager.SharedData.token, "username", DataUtils.readStringFromPreferences(this, "username"), callback =
-            { success ->
-                if (success) {
-                    if (DataManager.SharedData.sharedUser?.type == "preteur") {
-                        DataManager.getDrivers(this, DataManager.SharedData.token, callback = { success, arrayUsers ->
-                            if (success && arrayUsers != null) {
-                                this.runOnUiThread {
-                                    DataManager.SharedData.sharedDrivers?.let { recyclerInit("emprunteur", it) }
-                                    messagetype.text = "Ils cherchent une voiture"
-                                    // Load toutes les personnes qui recherchent une voiture et peupler le recyclerView de ces données
-                                }
-                            } else
-                                Log.e("bad", "bad")
-                        })
-
-                    }
-                    // Si le choix selectionné est "SEARCH"
-                    else if (DataManager.SharedData.sharedUser?.type == "emprunteur") {
-                        DataManager.getLenders(this, DataManager.SharedData.token, callback = { success, arrayUsers ->
-                            if (success && arrayUsers != null) {
-                                this.runOnUiThread {
-                                    DataManager.SharedData.sharedLenders?.let { recyclerInit("preteur", it) }
-                                    messagetype.text = "Ils proposent une voiture"
-                                    // Load toutes les personnes qui proposent leur voiture et peupler le recyclerView de ces données également
-                                }
-                            } else
-                                Log.e("bad", "bad")
-                        })
-                    }
-                } else
-                    Log.e("bad", "bad")
-            })
-        }
         // Désactive l'animation sur la BottomNavigationBar
         BottomNavigationViewHelper.disableShiftMode(bottom_navigation)
     }
@@ -168,8 +146,9 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.visibility = View.VISIBLE
     }
 
-    fun getDriversOrPassenger(users: ArrayList<Users>?, type: String?): ArrayList<Users>? {
+    public fun getDriversOrPassenger(users: ArrayList<Users>?, type: String?): ArrayList<Users>? {
         var array: ArrayList<Users>? = arrayListOf()
+        listOfLocations = arrayListOf()
 
         var i = 0
         if (users == null || type == null)
@@ -222,30 +201,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun recyclerInit(role: String?, users: ArrayList<Users>) {
-        if (role == null)
-            return
-        // CAROUSEL DESACTIVATED
-        //recyclerview.layoutManager = LinearManager(this, LinearLayoutManager.HORIZONTAL, false)
+    fun removeConversationFragment() {
+        if (this.conversationFragment != null) {
+            removeFragment(conversationFragment)
+            this.conversationFragment = null
+        }
+    }
 
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-        // Adapter changes cannot affect the size of the RecyclerView
-        recyclerView.setHasFixedSize(true)
-
-        // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
-        recyclerView.adapter = getDriversOrPassenger(users, role)?.let { RecyclerAdapter(it, this) }
-
-        /*recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val offset = recyclerView!!.computeHorizontalScrollOffset()
-                if (offset % recyclerView!!.getChildAt(0).width === 0) {
-                    currentPosition = offset / recyclerView!!.getChildAt(0).width
-                }
-            }
-        })
-*/
+    fun removeHomeFragment() {
+        if (this.homeFragment != null) {
+            removeFragment(homeFragment)
+            this.homeFragment = null
+        }
     }
 
     private fun initPubnub() {
@@ -281,10 +248,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (mapFragment != null || profileDetailFragment != null || researchFragment != null || messageFragment != null) {
+
+        if (conversationFragment != null) {
             fragmentManager.popBackStack()
             showBottomNavigation()
-            bottom_navigation.selectedItemId = R.id.action_ongle_1
+        }
+        else {
+            if (mapFragment != null || profileDetailFragment != null || researchFragment != null || messageFragment != null) {
+                fragmentManager.popBackStack()
+                showBottomNavigation()
+                bottom_navigation.selectedItemId = R.id.action_ongle_1
+            }
         }
     }
 

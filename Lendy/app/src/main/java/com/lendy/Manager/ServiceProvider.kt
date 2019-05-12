@@ -14,6 +14,7 @@ import org.json.JSONObject
 import junit.framework.TestCase
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lendy.Models.Discussion
+import com.lendy.Models.Message
 import com.lendy.Models.Users
 import com.lendy.Utils.DataUtils
 import okhttp3.RequestBody
@@ -28,6 +29,7 @@ enum class Endpoints(val value: String) {
     GET_LENDERS("/lenders"),
     GET_MYSELF("/myself"),
     SEND_MESSAGE("/message"),
+    GET_MESSAGE("/message"),
     DISCUSSIONS("/discussion")
 }
 
@@ -53,10 +55,10 @@ class ServiceProvider() {
         init {
             // SERVEUR LOCAL
             //baseURL = "http://10.0.2.2:27031/api/users"
-            baseURL = "http://192.168.1.12:27031/api/users"
+            //baseURL = "http://192.168.1.12:27031/api/users"
 
             // SERVEUR DE BILLEL
-            //baseURL = "http://api.lendy.fr:27031/api/users"
+            baseURL = "http://api.lendy.fr:27031/api/users"
         }
 
         fun getRequest(httpMethod: HTTPMethod, endpoint: Endpoints, queryParameters: java.util.ArrayList<java.util.HashMap<String, String>>?, bodyParams: java.util.HashMap<String, Any>?, token: String?): Request? {
@@ -272,6 +274,37 @@ class ServiceProvider() {
                     callback?.invoke(400, null)
             })
         }
+
+        fun getSpecificDiscussionMessages(context: Context?, token: String?, contactId: String, callback: ((code: Int, messages: ArrayList<Message>?) -> Unit)?) {
+
+            val queryParameter: ArrayList<HashMap<String, String>> = arrayListOf()
+            var hashmap = hashMapOf<String, String>()
+            hashmap.put("contacts", contactId)
+            queryParameter.add(hashmap)
+
+            // Request with Endpoint /users/anonymous and with current userId in Url parameters
+            val request = ServiceProvider.getRequest(HTTPMethod.GET, Endpoints.GET_MESSAGE, queryParameter, null, token)
+                    ?: return
+
+            performRequest(request, context, callback = { response, exception ->
+                val body_temp = response?.body()?.string()
+                if (response != null && exception == null && response.code() == 200) {
+                    val body = body_temp
+                    val jsonArray: JSONArray = JSONArray(body)
+                    val arraylist: ArrayList<Message> = arrayListOf()
+                    var objectMapper: ObjectMapper = ObjectMapper()
+                    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+                    for (i in 0 until jsonArray.length()) {
+                        val obj = Gson().fromJson(jsonArray.optJSONObject(i).toString(), Message::class.java)
+                        arraylist.add(obj)
+                    }
+                    callback?.invoke(response.code(), arraylist)
+                } else
+                    callback?.invoke(400, null)
+            })
+        }
+
 
         // This method will perform request and return via callback any reponse and Exception
         // It will also Log all informations about current request

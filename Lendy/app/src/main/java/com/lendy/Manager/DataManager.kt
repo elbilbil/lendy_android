@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import com.lendy.Models.Discussion
+import com.lendy.Models.Message
 import com.lendy.Models.User
 import com.lendy.Models.Users
 import com.lendy.Utils.DataUtils
@@ -177,6 +178,24 @@ class DataManager
                 }
             })
         }
+
+        fun getSpecificDiscussionMessages(context: Context?, token: String?, contactId: String?, callback: (success: Boolean, messages: ArrayList<Message>?) -> Unit)
+        {
+            if (context == null || token == null || contactId == null)
+                return
+
+            ServiceProvider.getSpecificDiscussionMessages(context, token, contactId, callback = { code, messages ->
+                if (code == 200 && messages != null)
+                {
+                    callback.invoke(true, messages)
+                }
+                else
+                {
+                    callback.invoke(false, null)
+                }
+            })
+        }
+
 
         fun loginUser(context: Context?, email: String?, password:String?, callback: (success: Boolean) -> Unit)
         {
