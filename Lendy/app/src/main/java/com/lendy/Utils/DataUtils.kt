@@ -1,6 +1,8 @@
 package com.lendy.Utils
 
+import android.app.Activity
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.google.gson.Gson
 import com.lendy.Models.User
 import com.lendy.Models.Users
@@ -28,6 +30,14 @@ class DataUtils {
                     c.getString(R.string.com_lendy_preference_file_key), Context.MODE_PRIVATE)
             val encryptedString = preferences?.getString(key, "default")
             return encryptedString
+        }
+
+        fun hideSoftKeyboard(activity: Activity?) {
+            val inputMethodManager = activity!!.getSystemService(
+                    Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            if (activity != null && inputMethodManager != null && activity.currentFocus != null) {
+                inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
+            }
         }
 
         fun writeinArrayOnPreferences(key: String?, array: Array<Users>?, c: Context) {

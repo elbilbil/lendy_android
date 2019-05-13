@@ -44,41 +44,41 @@ class HomeFragment : Fragment() {
 
         if (DataUtils.readStringFromPreferences(currentActivity, "token") == "default")
             DataManager.SharedData.token = DataManager.SharedData.sharedUser?.token
-        else {
+        else
             DataManager.SharedData.token = DataUtils.readStringFromPreferences(currentActivity, "token")
-            DataManager.getMyself(currentActivity, DataManager.SharedData.token, "username", DataUtils.readStringFromPreferences(currentActivity, "username"), callback =
-            { success ->
-                if (success) {
-                    if (DataManager.SharedData.sharedUser?.type == "preteur") {
-                        DataManager.getDrivers(currentActivity, DataManager.SharedData.token, callback = { success, arrayUsers ->
-                            if (success && arrayUsers != null) {
-                                currentActivity!!.runOnUiThread {
-                                    DataManager.SharedData.sharedDrivers?.let { recyclerInit("emprunteur", it) }
-                                    messagetype.text = "Ils cherchent une voiture"
-                                    // Load toutes les personnes qui recherchent une voiture et peupler le recyclerView de ces données
-                                }
-                            } else
-                                Log.e("bad", "bad")
-                        })
 
-                    }
-                    // Si le choix selectionné est "SEARCH"
-                    else if (DataManager.SharedData.sharedUser?.type == "emprunteur") {
-                        DataManager.getLenders(currentActivity, DataManager.SharedData.token, callback = { success, arrayUsers ->
-                            if (success && arrayUsers != null) {
-                                currentActivity!!.runOnUiThread {
-                                    DataManager.SharedData.sharedLenders?.let { recyclerInit("preteur", it) }
-                                    messagetype.text = "Ils proposent une voiture"
-                                    // Load toutes les personnes qui proposent leur voiture et peupler le recyclerView de ces données également
-                                }
-                            } else
-                                Log.e("bad", "bad")
-                        })
-                    }
-                } else
-                    Log.e("bad", "bad")
-            })
-        }
+        DataManager.getMyself(currentActivity, DataManager.SharedData.token, "username", DataUtils.readStringFromPreferences(currentActivity, "username"), callback =
+        { success ->
+            if (success) {
+                if (DataManager.SharedData.sharedUser?.type == "preteur") {
+                    DataManager.getDrivers(currentActivity, DataManager.SharedData.token, callback = { success, arrayUsers ->
+                        if (success && arrayUsers != null) {
+                            currentActivity!!.runOnUiThread {
+                                DataManager.SharedData.sharedDrivers?.let { recyclerInit("emprunteur", it) }
+                                messagetype.text = "Ils cherchent une voiture"
+                                // Load toutes les personnes qui recherchent une voiture et peupler le recyclerView de ces données
+                            }
+                        } else
+                            Log.e("bad", "bad")
+                    })
+
+                }
+                // Si le choix selectionné est "SEARCH"
+                else if (DataManager.SharedData.sharedUser?.type == "emprunteur") {
+                    DataManager.getLenders(currentActivity, DataManager.SharedData.token, callback = { success, arrayUsers ->
+                        if (success && arrayUsers != null) {
+                            currentActivity!!.runOnUiThread {
+                                DataManager.SharedData.sharedLenders?.let { recyclerInit("preteur", it) }
+                                messagetype.text = "Ils proposent une voiture"
+                                // Load toutes les personnes qui proposent leur voiture et peupler le recyclerView de ces données également
+                            }
+                        } else
+                            Log.e("bad", "bad")
+                    })
+                }
+            } else
+                Log.e("bad", "bad")
+        })
     }
 
     override fun onAttach(context: Context?) {
@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-*/
+    */
     }
 
     fun onSucceed() {

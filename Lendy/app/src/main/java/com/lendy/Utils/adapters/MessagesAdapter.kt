@@ -27,12 +27,22 @@ class MessagesAdapter(val discussions: ArrayList<Discussion>?, val activity : Ac
 
         holder.container.setOnClickListener { v ->
             run {
-                DataManager.getSpecificDiscussionMessages(activity, DataManager.SharedData.token, discussions?.get(position)?.members!![1], callback = {success, messages ->
+                var contactId : String = "";
+
+                for (elem in discussions?.get(position)?.members!!) {
+                    if (!DataManager.SharedData.sharedUser?._id?.equals(elem)!!)
+                    {
+                        contactId = elem!!
+                        break;
+                    }
+                }
+                DataManager.getSpecificDiscussionMessages(activity, DataManager.SharedData.token, contactId, callback = {success, messages ->
                     if (success && messages != null)
                     {
                         if (activity is MainActivity) {
                             val bundle = Bundle()
                             bundle.putSerializable("conversation_content", messages)
+                            bundle.putString("contactId", contactId)
                             activity.conversationFragment = ConversationFragment()
                             activity.conversationFragment!!.arguments = bundle
                             addFragmentToActivity(activity.fragmentManager, activity.conversationFragment, R.id.activity_main)

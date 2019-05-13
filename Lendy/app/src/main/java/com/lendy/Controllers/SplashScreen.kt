@@ -32,7 +32,7 @@ class SplashScreen : AppCompatActivity() {
             if (success) {
                 //DataUtils.writeStringOnPreferences(this, "address", DataManager.SharedData.sharedUser?.username)
                 //DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)
-                //DataUtils.writeStringOnPreferences(this, "token", DataManager.SharedData.sharedUser?.token)
+                DataUtils.writeStringOnPreferences(this, "token", DataManager.SharedData.sharedUser?.token)
                 startActivity(Intent(this.applicationContext, MainActivity::class.java))
                 finish()
             } else {

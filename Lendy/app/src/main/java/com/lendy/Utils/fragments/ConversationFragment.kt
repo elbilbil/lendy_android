@@ -9,33 +9,21 @@ import android.os.Bundle
 import android.view.*
 import com.lendy.Controllers.*
 import com.lendy.Manager.DataManager
-import com.lendy.Models.User
-import com.lendy.Models.Users
-import com.lendy.R
-import kotlinx.android.synthetic.main.register.*
-import android.content.Intent.getIntent
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.support.v4.app.NotificationCompat.getExtras
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.profiledetail.*
-import com.google.gson.Gson
-import android.content.Intent.getIntent
-import android.support.v7.widget.DividerItemDecoration
-import com.lendy.Models.Discussion
 import com.lendy.Models.Message
+import com.lendy.Utils.DataUtils
 import com.lendy.Utils.adapters.ConversationAdapter
-import com.lendy.Utils.adapters.MessagesAdapter
 import kotlinx.android.synthetic.main.conversation_fragment.*
-import kotlinx.android.synthetic.main.messages_fragment.*
-
+import android.support.v7.widget.RecyclerView
+import com.lendy.R
 
 class ConversationFragment : Fragment() {
 
     var currentActivity: Activity? = null
     var currentView: View? = null
     var conversation_content: ArrayList<Message>? = null
+    var contactId: String? = null
+    var adapter: ConversationAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.conversation_fragment, container, false)
@@ -49,9 +37,63 @@ class ConversationFragment : Fragment() {
         val cA = this.currentActivity
 
         val b = this.arguments
+
+        if (b.getString("contactId") != null) {
+            contactId = b.getString("contactId") as String?
+        }
+
         if (b.getSerializable("conversation_content") != null) {
             conversation_content = b.getSerializable("conversation_content") as ArrayList<Message>?
             recyclerInit(conversation_content)
+        }
+
+        send.setOnClickListener {
+            if (message.text.isNotEmpty()) {
+                DataManager.sendMessage(currentActivity, DataManager.SharedData.token, message.text.toString(), contactId, callback = { success: Boolean ->
+                    if (success) {
+                        DataManager.getSpecificDiscussionMessages(activity, DataManager.SharedData.token, contactId, callback = { success2, messages ->
+                            if (success2 && messages != null) {
+                                activity.runOnUiThread {
+                                    recyclerInit(messages)
+                                    message.text.clear()
+                                    DataUtils.hideSoftKeyboard(activity)
+                                    VOIR COMMENT SCROLL EN BAS quand on ajoute un msg
+                                            puis passer a la recherche et au profil
+                                }
+                            } else {
+                                activity.runOnUiThread {
+                                    AlertDialog.Builder(activity)
+                                            .setTitle("Erreur")
+                                            .setMessage("Impossible d'afficher cette conversation , veuillez réessayer")
+                                            .setPositiveButton("OK", null)
+                                            .show()
+                                }
+                            }
+                        })
+
+                    } else {
+                        activity!!.runOnUiThread {
+                            activity!!.runOnUiThread {
+                                android.app.AlertDialog.Builder(activity)
+                                        .setTitle("Erreur")
+                                        .setMessage("Une erreur est survenue, veuillez réessayer")
+                                        .setPositiveButton("OK", null)
+                                        .show()
+                            }
+                        }
+                    }
+                })
+            } else {
+                activity!!.runOnUiThread {
+                    activity!!.runOnUiThread {
+                        android.app.AlertDialog.Builder(activity)
+                                .setTitle("Erreur")
+                                .setMessage("Une erreur est survenue, veuillez réessayer")
+                                .setPositiveButton("OK", null)
+                                .show()
+                    }
+                }
+            }
         }
 
         if (cA is MainActivity)
@@ -89,16 +131,19 @@ class ConversationFragment : Fragment() {
         val cA = this.currentActivity
     }
 
-    fun recyclerInit(discusssion_content: ArrayList<Message>?) {
-        if (discusssion_content == null || discusssion_content.size == 0) {
+    fun recyclerInit(discussion_content: ArrayList<Message>?) {
+        if (discussion_content == null || discussion_content.size == 0) {
             return
         }
+
+        adapter = ConversationAdapter(discussion_content, currentActivity!!)
+
         conversation.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
-        conversation.addItemDecoration(DividerItemDecoration(conversation.context, DividerItemDecoration.VERTICAL))
+        //conversation.addItemDecoration(DividerItemDecoration(conversation.context, DividerItemDecoration.VERTICAL))
         // Adapter changes cannot affect the size of the RecyclerView
         conversation.setHasFixedSize(true)
 
         // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
-        conversation.adapter = ConversationAdapter(discusssion_content, currentActivity!!)
+        conversation.adapter = adapter
     }
 }

@@ -1,74 +1,66 @@
 package com.lendy.Utils.adapters
 
 import android.app.Activity
-import android.app.Fragment
-import android.app.FragmentManager
-import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageSwitcher
 import android.widget.ImageView
-import android.widget.TextView
-import com.lendy.Controllers.MainActivity
+import com.lendy.Manager.DataManager
 import com.lendy.Models.Message
-import com.lendy.Models.Users
 import com.lendy.R
-import com.lendy.Utils.fragments.ProfileDetailFragment
+import kotlinx.android.synthetic.main.item_recevided_message.view.*
+import java.util.ArrayList
+import android.widget.TextView
+import kotlinx.android.synthetic.main.item_recevided_message.view.date_content
+import kotlinx.android.synthetic.main.item_recevided_message.view.message_content
+import kotlinx.android.synthetic.main.item_send_message.view.*
 
-class ConversationAdapter(val conversation_content: ArrayList<Message>, val activity : Activity) : RecyclerView.Adapter<ConversationAdapter.ViewHolder>()
+class ConversationAdapter(val conversation_content: ArrayList<Message>, val activity : Activity) : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, type: Int): RecyclerView.ViewHolder {
+        val view: View
+        if (type == 1) {
+            view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_recevided_message, viewGroup, false)
+            return RecViewHolder(view)
+        } else {
+            view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_send_message, viewGroup, false)
+            return SendViewHolder(view)
+        }
+    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-
-
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
+        if (viewHolder is RecViewHolder ) {
+            viewHolder.message_content.text = conversation_content[i].message
+            viewHolder.date_content.text = "18:11"
+        } else if (viewHolder is SendViewHolder ){
+            viewHolder.message_content.text = conversation_content[i].message
+            viewHolder.date_content.text = "19:11"
+        }
     }
 
     override fun getItemCount(): Int {
-        return conversation_content.size
-    }
-
-    // Créer des détenteurs de vue. Chaque détenteur de vue est chargé d'afficher un seul élément avec une vue
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        //Faire deux view holder un pour les message de l'autre personne , un pour les notre
-
-        /*afficher en fonction de l'envoyeur la bulle a gauche ou a droite dans la conversation
-        + la possibilité d'écrire un msg ( enfin le click sur le bouton envoyer)
-        holder.container.setOnClickListener { v ->
-            run {
-
-            }
-        }*/
-        val view: View = LayoutInflater.from(parent.context).inflate((R.layout.user_list_elem), parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return conversation_content.size ?: 0
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    fun addFragmentToActivity(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
-
-        if (fragment == null) {
-            return;
+        if (conversation_content[position].refUser?.get(0)?.equals(DataManager.SharedData.sharedUser?._id)!!) {
+            return 0
+        } else {
+            return 1
         }
-
-        val transaction = manager.beginTransaction()
-        transaction.add(frameId, fragment)
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss()
     }
 
-    // Ici on recupere tous les élements contenu dans le layout
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
+    class RecViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var message_content: TextView = itemView.findViewById(R.id.message_content)
+        var date_content: TextView = itemView.findViewById(R.id.date_content)
     }
+
+    class SendViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var message_content: TextView = itemView.findViewById(R.id.message_content)
+        var date_content: TextView = itemView.findViewById(R.id.date_content)
+    }
+
 }

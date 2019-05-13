@@ -40,6 +40,7 @@ class ConnectActivity : AppCompatActivity() {
                     if (success) {
                         DataUtils.writeStringOnPreferences(this, "username", DataManager.SharedData.sharedUser?.username)
                         DataUtils.writeStringOnPreferences(this, "password", DataManager.SharedData.sharedUser?.password)
+                        DataUtils.writeStringOnPreferences(this, "token", DataManager.SharedData.sharedUser?.token)
                         startActivity(Intent(this.applicationContext, MainActivity::class.java))
                         finish()
                     } else {
