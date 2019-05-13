@@ -57,8 +57,9 @@ class ConversationFragment : Fragment() {
                                     recyclerInit(messages)
                                     message.text.clear()
                                     DataUtils.hideSoftKeyboard(activity)
-                                    VOIR COMMENT SCROLL EN BAS quand on ajoute un msg
-                                            puis passer a la recherche et au profil
+                                    conversation.post(Runnable {
+                                        conversation.smoothScrollToPosition(adapter?.getItemCount()!! - 1)
+                                    })
                                 }
                             } else {
                                 activity.runOnUiThread {
@@ -137,7 +138,6 @@ class ConversationFragment : Fragment() {
         }
 
         adapter = ConversationAdapter(discussion_content, currentActivity!!)
-
         conversation.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
         //conversation.addItemDecoration(DividerItemDecoration(conversation.context, DividerItemDecoration.VERTICAL))
         // Adapter changes cannot affect the size of the RecyclerView
@@ -145,5 +145,9 @@ class ConversationFragment : Fragment() {
 
         // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
         conversation.adapter = adapter
+
+        conversation.post(Runnable {
+            conversation.smoothScrollToPosition(adapter?.getItemCount()!! - 1)
+        })
     }
 }
