@@ -36,6 +36,10 @@ class ConversationFragment : Fragment() {
         this.currentActivity = this.activity
         val cA = this.currentActivity
 
+        if (cA is MainActivity)
+        {
+            cA.conversationFragment = this
+        }
         val b = this.arguments
 
         if (b.getString("contactId") != null) {
@@ -121,10 +125,13 @@ class ConversationFragment : Fragment() {
         super.onDestroy()
     }
 
-
     fun onSucceed() {
 
         val cA = this.currentActivity
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
     fun onFail() {

@@ -66,28 +66,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map.getMapAsync(OnMapReadyCallback { mMap ->
             // DYNAMIC BUT FOR TEST , valeur set en DUR
 
-            /*for(i in 0 until arrayListOfLocations.size)
+            for(i in 0 until arrayListOfLocations.size)
             {
                 val temp: JsonObject = arrayListOfLocations.get(i)
-                val marker: MarkerOptions = MarkerOptions().position(LatLng(temp.get("latitude").asDouble, temp.get("longitude").asDouble)).title("Marker")
+                val marker: MarkerOptions = MarkerOptions().position(LatLng(temp.get("latitude").asDouble, temp.get("longitude").asDouble)).title("")
                 marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.car))
                 mMap.addMarker(marker)
-            }*/
+            }
 
-            //A SUPPRIMER
-            val marker1: MarkerOptions = MarkerOptions().position(LatLng(43.295021, 5.374490)).title("Marker")
-            val marker2: MarkerOptions = MarkerOptions().position(LatLng(43.3102998, 5.3676044)).title("Marker")
-            val marker3: MarkerOptions = MarkerOptions().position(LatLng(43.304407, 5.374210)).title("Marker")
-            val marker4: MarkerOptions = MarkerOptions().position(LatLng(43.295989, 5.376768)).title("Marker")
-            marker1.icon(BitmapDescriptorFactory.fromResource(R.drawable.car))
-            marker2.icon(BitmapDescriptorFactory.fromResource(R.drawable.car))
-            marker3.icon(BitmapDescriptorFactory.fromResource(R.drawable.car))
-            marker4.icon(BitmapDescriptorFactory.fromResource(R.drawable.car))
-            mMap.addMarker(marker1)
-            mMap.addMarker(marker2)
-            mMap.addMarker(marker3)
-            mMap.addMarker(marker4)
-            val cameraPosition = CameraPosition.Builder().target(marker1.position).zoom(13f).build()
+            val cameraPosition = CameraPosition.Builder().target(LatLng(arrayListOfLocations.get(0).get("latitude").asDouble, arrayListOfLocations.get(0).get("longitude").asDouble)).zoom(13f).build()
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         })
     }

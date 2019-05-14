@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     var messageFragment: MessagesFragment? = null
     var conversationFragment: ConversationFragment? = null
     var homeFragment: HomeFragment? = null
+    var myProfilFragment: MyProfilFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +72,9 @@ class MainActivity : AppCompatActivity() {
 
                         if (homeFragment != null && homeFragment?.isVisible!!)
                             removeHomeFragment()
+
+                        if (myProfilFragment != null && myProfilFragment?.isVisible!!)
+                            removeMyProfilFragment()
 
                         when (item.itemId) {
                             R.id.action_ongle_1 -> {
@@ -112,6 +116,11 @@ class MainActivity : AppCompatActivity() {
                                 addFragmentToActivity(fragmentManager, messageFragment, R.id.activity_main)
                             }
                             R.id.action_ongle_5 -> {
+                                myProfilFragment = MyProfilFragment()
+                                // set LegalsFragment Arguments
+                                //researchFragment!!.arguments = bundle
+
+                                addFragmentToActivity(fragmentManager, myProfilFragment, R.id.activity_main)
 
                             }
                             else -> {
@@ -215,6 +224,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun removeMyProfilFragment() {
+        if (this.myProfilFragment != null) {
+            removeFragment(myProfilFragment)
+            this.myProfilFragment = null
+        }
+    }
+
     private fun initPubnub() {
         val pnConfiguration = PNConfiguration()
         pnConfiguration.subscribeKey = "sub-c-32cb3dba-f4bc-11e8-aba4-3a82e8287a69"
@@ -254,7 +270,7 @@ class MainActivity : AppCompatActivity() {
             showBottomNavigation()
         }
         else {
-            if (mapFragment != null || profileDetailFragment != null || researchFragment != null || messageFragment != null) {
+            if (mapFragment != null || profileDetailFragment != null || researchFragment != null || messageFragment != null || myProfilFragment != null) {
                 fragmentManager.popBackStack()
                 showBottomNavigation()
                 bottom_navigation.selectedItemId = R.id.action_ongle_1
