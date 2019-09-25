@@ -27,6 +27,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBTfZuvJ8vp6yHyZTnqYy2SqEtwO8C_N5c" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="74a8891c18fcd6958abf96a89ceb43a9a2e59ed7"
+            />
+
         <activity android:name=".Controllers.SplashScreen" android:theme="@style/Theme.AppCompat.NoActionBar" android:screenOrientation="portrait">
 
             <intent-filter>
