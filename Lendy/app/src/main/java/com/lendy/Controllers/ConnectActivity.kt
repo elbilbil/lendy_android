@@ -25,7 +25,7 @@ class ConnectActivity : AppCompatActivity() {
 
         // Click sur le message "Pas de compte"
         noaccount.setOnClickListener {
-            addFragmentToActivity(fragmentManager, RegisterFragment(), R.id.connect)
+            DataUtils.addFragmentToActivity(fragmentManager, RegisterFragment(), R.id.connect)
         }
 
         // Click sur le bouton Connexion
@@ -64,18 +64,6 @@ class ConnectActivity : AppCompatActivity() {
         }
     }
 
-    fun addFragmentToActivity(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
-
-        if (fragment == null) {
-            return;
-        }
-
-        val transaction = manager.beginTransaction()
-        transaction.add(frameId, fragment)
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss()
-        listOfFragment.add(fragment)
-    }
 
     fun removeFragment(fragment: Fragment?) {
         if (fragment == null) {

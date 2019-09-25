@@ -1,6 +1,8 @@
 package com.lendy.Utils
 
 import android.app.Activity
+import android.app.Fragment
+import android.app.FragmentManager
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import com.google.gson.Gson
@@ -8,6 +10,11 @@ import com.lendy.Models.User
 import com.lendy.Models.Users
 import com.lendy.R
 import com.lmntrx.android.library.livin.missme.ProgressDialog
+import android.app.TimePickerDialog
+import android.widget.TimePicker
+import com.lendy.Utils.fragments.DialogResult
+import java.util.*
+
 
 class DataUtils {
     companion object {
@@ -65,6 +72,38 @@ class DataUtils {
                 return
 
             progressDialog.dismiss()
+        }
+
+        fun addFragmentToActivity(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
+
+            if (fragment == null) {
+                return;
+            }
+
+            val transaction = manager.beginTransaction()
+            transaction.add(frameId, fragment)
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss()
+        }
+
+        fun showHourPicker(activity: Activity?, dialogResult: DialogResult) {
+            val myCalender = Calendar.getInstance()
+            val hour = myCalender.get(Calendar.HOUR_OF_DAY)
+            val minute = myCalender.get(Calendar.MINUTE)
+
+
+            val myTimeListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                if (view.isShown) {
+                    myCalender.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    myCalender.set(Calendar.MINUTE, minute)
+                    dialogResult.getHourResult(hourOfDay, minute)
+
+                }
+            }
+            val timePickerDialog = TimePickerDialog(activity, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true)
+            timePickerDialog.setTitle("Choose hour:")
+            timePickerDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            timePickerDialog.show()
         }
     }
 }

@@ -19,6 +19,7 @@ import com.lendy.R
 import com.lendy.Utils.fragments.ConversationFragment
 import com.google.gson.Gson
 import com.lendy.Manager.DataManager
+import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 
 class MessagesAdapter(val discussions: ArrayList<Discussion>?, val activity : Activity, val allUsers: ArrayList<Users>?) : RecyclerView.Adapter<MessagesAdapter.ViewHolder>()
 {
@@ -99,18 +100,6 @@ class MessagesAdapter(val discussions: ArrayList<Discussion>?, val activity : Ac
 
     override fun getItemViewType(position: Int): Int {
         return position
-    }
-
-    fun addFragmentToActivity(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
-
-        if (fragment == null) {
-            return;
-        }
-
-        val transaction = manager.beginTransaction()
-        transaction.add(frameId, fragment)
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss()
     }
 
     // Ici on recupere tous les élements contenu dans le layout

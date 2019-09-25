@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
+    android:clickable="true"
+    android:focusable="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/sign"
+            android:layout_width="198dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_generic_bleu"
+            android:text="SIGNER"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/sign"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac orci in lorem interdum mollis ut quis lorem. Pellentesque in sapien non diam dignissim auctor a vitae justo. Duis interdum neque nec laoreet venenatis. Sed eu ligula in est aliquam scelerisque ac quis lectus. Nulla ex quam, elementum sed ligula at, aliquet tincidunt dui. Etiam vehicula pharetra risus, vitae imperdiet erat facilisis gravida. Donec vitae ipsum nunc. Sed tincidunt sem lectus, id sollicitudin lectus volutpat vitae.
+
+Donec eget convallis metus. Donec tempor mollis odio non lobortis. In posuere mattis luctus. Nam placerat nisl vitae tempor hendrerit. Morbi nunc risus, interdum vulputate porttitor in, efficitur non eros. Cras neque augue, elementum id elementum sed, tristique id ex. Aenean rutrum mollis ultricies. Phasellus id lacus sed eros tincidunt pharetra lobortis vel diam. Aenean aliquet nisi elit, sed rhoncus orci viverra eget. Suspendisse a accumsan felis.
+
+Maecenas sollicitudin libero vitae enim hendrerit lacinia. Pellentesque accumsan feugiat mi et elementum. Pellentesque lobortis magna ut augue suscipit, et porta est tristique. Proin convallis blandit sollicitudin. In hac habitasse platea dictumst. Curabitur a interdum neque, vehicula pretium velit. Proin vel placerat lorem. Vestibulum gravida nunc non velit commodo, sit amet posuere dui tincidunt. Ut luctus eu urna a accumsan.
+
+Nullam dignissim magna vel sem lobortis maximus. Vivamus et nibh convallis, pellentesque lacus ac, interdum augue. Phasellus hendrerit consectetur velit at gravida. Praesent vehicula enim dignissim quam mollis, a blandit mi semper. Maecenas scelerisque diam et vehicula rutrum. Nullam interdum, lectus vitae aliquet ullamcorper, ipsum magna iaculis libero, a ultricies ante nulla a justo. Vestibulum et dui augue.
+
+Vivamus et aliquet lacus. Praesent tincidunt, felis vel vestibulum pretium, nisl velit pharetra diam, sit amet tempus libero sapien tempor ligula. Integer venenatis vel arcu eget blandit. Mauris volutpat mi nec arcu sodales, id sollicitudin arcu pharetra. Morbi fringilla sem nibh, id congue turpis pulvinar vitae. Donec vulputate feugiat hendrerit. Cras tellus neque, iaculis sit amet risus quis, finibus dignissim ligula. Sed scelerisque congue sem, eu ultricies nisl gravida ut. Nam sit amet eros luctus, tincidunt nisl feugiat, laoreet felis. Aliquam porta massa vel metus ultricies mattis. Pellentesque interdum sem a ex luctus dignissim. Suspendisse id suscipit risus. Cras sodales semper ante in ornare. Proin fringilla tristique pretium."
+                android:textColor="@color/black" />
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/white"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Contrat"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

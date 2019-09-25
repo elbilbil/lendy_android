@@ -23,6 +23,7 @@ import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import com.lendy.R
 import android.support.v7.widget.DividerItemDecoration
+import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.adapters.RecyclerAdapter
 import com.lendy.Utils.custom_views.BottomNavigationViewHelper
 import com.lendy.Utils.fragments.*
@@ -39,7 +40,9 @@ class MainActivity : AppCompatActivity() {
     var mapFragment: MapFragment? = null
     var researchFragment: ResearchFragment? = null
     var profileDetailFragment: ProfileDetailFragment? = null
+    var contractFragment: ContractFragment? = null
     var messageFragment: MessagesFragment? = null
+    var suppOrderFragment: SuppOrderFragment? = null
     var conversationFragment: ConversationFragment? = null
     var homeFragment: HomeFragment? = null
     var myProfilFragment: MyProfilFragment? = null
@@ -237,19 +240,6 @@ class MainActivity : AppCompatActivity() {
         pnConfiguration.publishKey = "pub-c-81996e83-1edd-4f6b-b9a5-bbec2afb454f"
         pnConfiguration.isSecure = true
         val pubnub = PubNub(pnConfiguration)
-    }
-
-    fun addFragmentToActivity(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
-
-        if (fragment == null) {
-            return;
-        }
-
-        val transaction = manager.beginTransaction()
-        transaction.add(frameId, fragment)
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss()
-        listOfFragment.add(fragment)
     }
 
     fun removeFragment(fragment: Fragment?) {

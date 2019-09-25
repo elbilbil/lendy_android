@@ -9,6 +9,7 @@ import com.lendy.Controllers.*
 import com.lendy.Models.Users
 import com.lendy.R
 import android.graphics.drawable.Drawable
+import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.custom_views.SendMessageDialog
 import kotlinx.android.synthetic.main.profiledetail.*
 
@@ -34,6 +35,10 @@ class ProfileDetailFragment : Fragment() {
         if (b.getSerializable("infos") != null) {
             userInfo = b.getSerializable("infos") as HashMap<String?, Any?>
             user = userInfo["user"] as Users?
+
+            if (!user?.type.equals("preteur"))
+                reserver.text = "Confier"
+
             profilpicture.setImageDrawable(userInfo["firstImage"] as Drawable?)
             profilname.text = user!!.firstname + " " + user!!.lastname
         }
@@ -41,6 +46,18 @@ class ProfileDetailFragment : Fragment() {
         contacter.setOnClickListener {
             val sendMessageDialog = SendMessageDialog(activity, user)
             sendMessageDialog.show()
+        }
+
+        reserver.setOnClickListener {
+            if (this.currentActivity is MainActivity) {
+                (this.currentActivity as MainActivity).contractFragment = ContractFragment()
+
+                //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
+
+                addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).contractFragment, R.id.activity_main)
+            }
+
+
         }
 
         if (cA is MainActivity)

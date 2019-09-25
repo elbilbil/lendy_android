@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.research_fragment.*
 
 interface DialogResult {
     fun getDialogResult(date: String, index: Int)
+    fun getHourResult(hour: Int, minute: Int)
 }
 
 class ResearchFragment : Fragment() {
@@ -34,6 +35,10 @@ class ResearchFragment : Fragment() {
         this.currentActivity = this.activity
         val cA = this.currentActivity
         interfaceDialog = object : DialogResult {
+            override fun getHourResult(hour: Int, minute: Int) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
             override fun getDialogResult(date: String, index: Int) {
                 if (index == 1)
                 {

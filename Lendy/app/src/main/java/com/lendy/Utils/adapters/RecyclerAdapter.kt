@@ -15,6 +15,7 @@ import android.widget.TextView
 import com.lendy.Controllers.MainActivity
 import com.lendy.Models.Users
 import com.lendy.R
+import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.fragments.ProfileDetailFragment
 
 /**
@@ -71,18 +72,6 @@ class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : 
 
     override fun getItemViewType(position: Int): Int {
         return position
-    }
-
-    fun addFragmentToActivity(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
-
-        if (fragment == null) {
-            return;
-        }
-
-        val transaction = manager.beginTransaction()
-        transaction.add(frameId, fragment)
-        transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss()
     }
 
     // Ici on recupere tous les élements contenu dans le layout
