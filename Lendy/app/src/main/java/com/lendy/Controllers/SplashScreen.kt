@@ -10,12 +10,18 @@ import com.lendy.Manager.DataManager
 import com.lendy.R
 import com.lendy.Utils.DataUtils
 import kotlinx.android.synthetic.main.connect_activity.*
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        Fabric.with(this, Crashlytics())
 
         if (DataUtils.readStringFromPreferences(this, "username") == "default" || DataUtils.readStringFromPreferences(this, "password") == "default") {
             startActivity(Intent(this.applicationContext, ConnectActivity::class.java))

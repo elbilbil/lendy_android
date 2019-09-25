@@ -9,6 +9,9 @@ import com.lendy.Controllers.*
 import com.lendy.Models.Users
 import com.lendy.R
 import android.graphics.drawable.Drawable
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.custom_views.SendMessageDialog
 import kotlinx.android.synthetic.main.profiledetail.*
@@ -32,66 +35,71 @@ class ProfileDetailFragment : Fragment() {
         val cA = this.currentActivity
 
         val b = this.arguments
+
+        val type = object : TypeToken<HashMap<String?, Any?>>() {}.type
+
         if (b.getSerializable("infos") != null) {
             userInfo = b.getSerializable("infos") as HashMap<String?, Any?>
-            user = userInfo["user"] as Users?
+            /*if (b.getString("infos") != null) {
+                userInfo = Gson().fromJson(b.getString("infos"), type)*/
+                user = userInfo["user"] as Users?
 
-            if (!user?.type.equals("preteur"))
-                reserver.text = "Confier"
+                if (!user?.type.equals("preteur"))
+                    reserver.text = "Confier"
 
-            profilpicture.setImageDrawable(userInfo["firstImage"] as Drawable?)
-            profilname.text = user!!.firstname + " " + user!!.lastname
-        }
-
-        contacter.setOnClickListener {
-            val sendMessageDialog = SendMessageDialog(activity, user)
-            sendMessageDialog.show()
-        }
-
-        reserver.setOnClickListener {
-            if (this.currentActivity is MainActivity) {
-                (this.currentActivity as MainActivity).contractFragment = ContractFragment()
-
-                //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
-
-                addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).contractFragment, R.id.activity_main)
+                profilpicture.setImageDrawable(userInfo["firstImage"] as Drawable?)
+                profilname.text = user!!.firstname + " " + user!!.lastname
             }
 
+            contacter.setOnClickListener {
+                val sendMessageDialog = SendMessageDialog(activity, user)
+                sendMessageDialog.show()
+            }
+
+            reserver.setOnClickListener {
+                if (this.currentActivity is MainActivity) {
+                    (this.currentActivity as MainActivity).contractFragment = ContractFragment()
+
+                    //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
+
+                    addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).contractFragment, R.id.activity_main)
+                }
+
+
+            }
+
+            if (cA is MainActivity)
+                cA.hideBottomNavigation()
+        }
+
+        override fun onAttach(context: Context?) {
+            super.onAttach(context)
+        }
+
+        override fun onSaveInstanceState(outState: Bundle?) {
 
         }
 
-        if (cA is MainActivity)
-            cA.hideBottomNavigation()
+        override fun onDestroyView() {
+            super.onDestroyView()
+        }
+
+        override fun onDetach() {
+            super.onDetach()
+        }
+
+        override fun onDestroy() {
+            super.onDestroy()
+        }
+
+
+        fun onSucceed() {
+
+            val cA = this.currentActivity
+        }
+
+        fun onFail() {
+
+            val cA = this.currentActivity
+        }
     }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
-    fun onSucceed() {
-
-        val cA = this.currentActivity
-    }
-
-    fun onFail() {
-
-        val cA = this.currentActivity
-    }
-}

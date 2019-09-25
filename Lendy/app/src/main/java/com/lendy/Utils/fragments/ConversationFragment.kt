@@ -15,7 +15,10 @@ import com.lendy.Utils.DataUtils
 import com.lendy.Utils.adapters.ConversationAdapter
 import kotlinx.android.synthetic.main.conversation_fragment.*
 import android.support.v7.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.lendy.R
+import java.lang.reflect.Type
 
 class ConversationFragment : Fragment() {
 
@@ -46,8 +49,9 @@ class ConversationFragment : Fragment() {
             contactId = b.getString("contactId") as String?
         }
 
-        if (b.getSerializable("conversation_content") != null) {
-            conversation_content = b.getSerializable("conversation_content") as ArrayList<Message>?
+        if (b.getString("conversation_content") != null) {
+            val type = object : TypeToken<ArrayList<Message>>() {}.type
+            conversation_content = Gson().fromJson(b.getString("conversation_content"), type)
             recyclerInit(conversation_content)
         }
 

@@ -36,7 +36,8 @@ class ContractFragment : Fragment()
             }
         }
 
-
+        if (this.currentActivity is MainActivity)
+            (this.currentActivity as MainActivity).hideBottomNavigation()
     }
 
 }

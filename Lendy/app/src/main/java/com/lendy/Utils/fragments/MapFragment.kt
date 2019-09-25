@@ -16,8 +16,11 @@ import kotlinx.android.synthetic.main.map_fragment.*
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import com.lendy.Controllers.MainActivity
+import com.lendy.Models.Message
 import org.json.JSONObject
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -41,8 +44,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         var view: View? = inflater?.inflate(R.layout.map_fragment, container, false)
 
-        if (arguments.getSerializable("arrayLocations") != null)
-            arrayListOfLocations = arguments.getSerializable("arrayLocations") as ArrayList<JsonObject>
+        val type = object : TypeToken<ArrayList<JsonObject>>() {}.type
+        if (arguments.getString("arrayLocations") != null)
+            arrayListOfLocations = Gson().fromJson(arguments.getString("arrayLocations"), type)
         return view
     }
 

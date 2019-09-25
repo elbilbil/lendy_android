@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.gson.Gson
 import com.lendy.Controllers.MainActivity
 import com.lendy.Models.Users
 import com.lendy.R

@@ -1,6 +1,7 @@
 package com.lendy.Controllers
 
 import android.Manifest
+import android.app.AlertDialog
 import android.app.Fragment
 import android.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                             R.id.action_ongle_2 -> {
                                 val bundle = Bundle()
 
-                                //bundle.putSerializable("arrayLocations", listOfLocations)
+                                //bundle.putString("arrayLocations", listOfLocations)
 
                                 researchFragment = ResearchFragment()
                                 // set LegalsFragment Arguments
@@ -99,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
                                 val bundle = Bundle()
 
-                                bundle.putSerializable("arrayLocations", listOfLocations)
+                                bundle.putString("arrayLocations", Gson().toJson(listOfLocations))
 
                                 mapFragment = MapFragment()
                                 // set LegalsFragment Arguments
@@ -148,6 +149,18 @@ class MainActivity : AppCompatActivity() {
 
         // Désactive l'animation sur la BottomNavigationBar
         BottomNavigationViewHelper.disableShiftMode(bottom_navigation)
+    }
+
+    fun showDialog(message: String)
+    {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+        builder.setCancelable(true)
+
+        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     fun hideBottomNavigation() {

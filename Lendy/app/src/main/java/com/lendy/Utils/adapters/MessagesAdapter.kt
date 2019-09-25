@@ -31,9 +31,9 @@ class MessagesAdapter(val discussions: ArrayList<Discussion>?, val activity : Ac
                 var contactId : String = "";
 
                 for (elem in discussions?.get(position)?.members!!) {
-                    if (!DataManager.SharedData.sharedUser?._id?.equals(elem)!!)
+                    if (!DataManager.SharedData.sharedUser?._id?.equals(elem?._id)!!)
                     {
-                        contactId = elem!!
+                        contactId = elem?.id!!
                         break;
                     }
                 }
@@ -42,7 +42,7 @@ class MessagesAdapter(val discussions: ArrayList<Discussion>?, val activity : Ac
                     {
                         if (activity is MainActivity) {
                             val bundle = Bundle()
-                            bundle.putSerializable("conversation_content", messages)
+                            bundle.putString("conversation_content", Gson().toJson(messages))
                             bundle.putString("contactId", contactId)
                             activity.conversationFragment = ConversationFragment()
                             activity.conversationFragment!!.arguments = bundle
@@ -72,7 +72,7 @@ class MessagesAdapter(val discussions: ArrayList<Discussion>?, val activity : Ac
         if (allUsers != null) {
             for (user: Users in allUsers)
             {
-                if (user._id?.equals(discussions?.get(position)?.members?.get(1))!!)
+                if (user._id?.equals(discussions?.get(position)?.members?.get(1)?._id)!!)
                 {
                     return user.firstname!! + " " + user.lastname!!
                 }

@@ -9,6 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
+import com.lendy.Controllers.MainActivity
 import com.lendy.R
 import com.lendy.Utils.DataUtils
 import com.lendy.Utils.custom_views.ChooseDateDialog
@@ -20,6 +23,11 @@ class SuppOrderFragment : Fragment()
     private var currentActivity: Activity? = null
     private var currentView: View? = null
     private var dialogResult: DialogResult? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.supp_order_fragment, container, false)
@@ -33,7 +41,6 @@ class SuppOrderFragment : Fragment()
 
         dialogResult = object : DialogResult {
             override fun getHourResult(hour: Int, minute: Int) {
-                Log.e("lol", "lol")
             }
 
             override fun getDialogResult(date: String, index: Int) {
@@ -57,6 +64,26 @@ class SuppOrderFragment : Fragment()
                 }
             })
         }
+
+        valider.setOnClickListener {
+
+            if ((choose_place.text == null || choose_place.text.toString().equals("")) &&
+                    (complementary_infos.text == null || complementary_infos.text.toString().equals("")) &&
+                    (choose_date_supp.text == null || choose_date_supp.text.toString().equals("")) &&
+                    (choose_hour.text == null || choose_hour.text.toString().equals("")))
+            {
+                Toast.makeText(this.currentActivity, "Vous devez renseigner tous les champs avant de valider", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                if (this.currentActivity is MainActivity)
+                    (this.currentActivity as MainActivity).showDialog("Contrat signé avec succès !")
+                this.currentActivity!!.onBackPressed()
+            }
+        }
+
+        if (this.currentActivity is MainActivity)
+            (this.currentActivity as MainActivity).hideBottomNavigation()
     }
 
 }
