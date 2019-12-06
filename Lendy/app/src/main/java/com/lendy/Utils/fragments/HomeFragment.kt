@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
                         if (success && arrayUsers != null) {
                             currentActivity!!.runOnUiThread {
                                 DataManager.SharedData.sharedDrivers?.let { recyclerInit("emprunteur", it) }
-                                messagetype.text = "Ils cherchent une voiture"
+                                messagetype?.text = "Ils cherchent une voiture"
                                 // Load toutes les personnes qui recherchent une voiture et peupler le recyclerView de ces données
                             }
                         } else
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
                         if (success && arrayUsers != null) {
                             currentActivity!!.runOnUiThread {
                                 DataManager.SharedData.sharedLenders?.let { recyclerInit("preteur", it) }
-                                messagetype.text = "Ils proposent une voiture"
+                                messagetype?.text = "Ils proposent une voiture"
                                 // Load toutes les personnes qui proposent leur voiture et peupler le recyclerView de ces données également
                             }
                         } else
@@ -108,14 +108,15 @@ class HomeFragment : Fragment() {
         // CAROUSEL DESACTIVATED
         //recyclerview.layoutManager = LinearManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        recyclerView.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-        // Adapter changes cannot affect the size of the RecyclerView
-        recyclerView.setHasFixedSize(true)
+        if (recyclerView != null) {
+            recyclerView.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
+            recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+            // Adapter changes cannot affect the size of the RecyclerView
+            recyclerView.setHasFixedSize(true)
 
-        if (currentActivity != null && currentActivity is MainActivity)
-            recyclerView.adapter = (currentActivity as MainActivity).getDriversOrPassenger(users, role)?.let { RecyclerAdapter(it, currentActivity!!) }
-
+            if (currentActivity != null && currentActivity is MainActivity)
+                recyclerView.adapter = (currentActivity as MainActivity).getDriversOrPassenger(users, role)?.let { RecyclerAdapter(it, currentActivity!!) }
+        }
         // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
 
         /*recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

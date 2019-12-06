@@ -90,23 +90,27 @@ class MessagesFragment : Fragment() {
     }
 
     fun recyclerInit(discussions: ArrayList<Discussion>?) {
-        if (discussions == null || discussions.size == 0) {
-            nomessages.visibility = View.VISIBLE
-            return
-        }
-        else
-        {
-            nomessages.visibility = View.GONE
-        }
-        recyclerView.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-        // Adapter changes cannot affect the size of the RecyclerView
-        recyclerView.setHasFixedSize(true)
 
-        // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
-        if (DataManager.SharedData?.sharedUser?.type!!.equals("preteur"))
-            recyclerView.adapter = MessagesAdapter(discussions, currentActivity!!, DataManager.SharedData?.sharedDrivers!!)
-        else
-            recyclerView.adapter = MessagesAdapter(discussions, currentActivity!!, DataManager.SharedData?.sharedLenders!!)
+        if (nomessages != null) {
+            if (discussions == null || discussions.size == 0) {
+                nomessages.visibility = View.VISIBLE
+                return
+            } else {
+                nomessages.visibility = View.GONE
+            }
+        }
+
+        if (recyclerView != null) {
+            recyclerView.layoutManager = LinearLayoutManager(currentActivity, LinearLayoutManager.VERTICAL, false)
+            recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
+            // Adapter changes cannot affect the size of the RecyclerView
+            recyclerView.setHasFixedSize(true)
+
+            // Attach an Adapter to the recycleView who will contains the list of lootboxes and manage it
+            if (DataManager.SharedData?.sharedUser?.type!!.equals("preteur"))
+                recyclerView.adapter = MessagesAdapter(discussions, currentActivity!!, DataManager.SharedData?.sharedDrivers!!)
+            else
+                recyclerView.adapter = MessagesAdapter(discussions, currentActivity!!, DataManager.SharedData?.sharedLenders!!)
+        }
     }
 }

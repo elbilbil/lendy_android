@@ -12,7 +12,6 @@ import com.lendy.R
 import com.lmntrx.android.library.livin.missme.ProgressDialog
 import android.app.TimePickerDialog
 import android.widget.TimePicker
-import com.lendy.Utils.fragments.DialogResult
 import java.util.*
 
 
@@ -82,6 +81,18 @@ class DataUtils {
 
             val transaction = manager.beginTransaction()
             transaction.add(frameId, fragment)
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss()
+        }
+
+        fun replaceFragment(manager: FragmentManager, fragment: Fragment?, frameId: Int) {
+
+            if (fragment == null) {
+                return;
+            }
+
+            val transaction = manager.beginTransaction()
+            transaction.replace(frameId, fragment)
             transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss()
         }

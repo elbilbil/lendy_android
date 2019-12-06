@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.lendy.Controllers.MainActivity
 import com.lendy.R
 import com.lendy.Utils.DataUtils
+import com.lendy.Utils.DialogResult
 import com.lendy.Utils.custom_views.ChooseDateDialog
 import kotlinx.android.synthetic.main.research_fragment.*
 import kotlinx.android.synthetic.main.supp_order_fragment.*
@@ -77,7 +78,7 @@ class SuppOrderFragment : Fragment()
             else
             {
                 if (this.currentActivity is MainActivity)
-                    (this.currentActivity as MainActivity).showDialog("Contrat signé avec succès !")
+                    (this.currentActivity as MainActivity).showDialog("Contrat signé avec succès, Rendez-vous dans vos reservations !")
                 this.currentActivity!!.onBackPressed()
             }
         }

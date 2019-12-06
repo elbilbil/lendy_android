@@ -134,11 +134,36 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam"
+                            android:text="Ma description géniale"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </android.support.constraint.ConstraintLayout>
+
+
+                    <TextView
+                        android:id="@+id/disponibility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Disponibilité"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+                    <TextView
+                        android:id="@+id/disponibility_content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Du : 26/09/2019\nAu : 12/12/2019"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/disponibility" />
 
                     <TextView
                         android:id="@+id/vehicule"
@@ -149,7 +174,7 @@
                         android:text="Véhicule"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+                        app:layout_constraintTop_toBottomOf="@+id/disponibility_content" />
 
                     <TextView
                         android:id="@+id/vehiculedescription"
@@ -158,11 +183,21 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="CLIO 4 RS 2016\nCitadine\nBoite auto\nDiesel\n5 places\n5 portes\n73 000km\n5L/100km"
                         android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/vehicule" />
+
+                    <ImageView
+                        android:id="@+id/car_image"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/vehiculedescription" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -171,17 +206,16 @@
                         android:layout_marginTop="8dp"
                         android:text="Profil"
                         android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="@+id/vehiculedescription"
-                        app:layout_constraintTop_toBottomOf="@+id/vehiculedescription" />
+                        app:layout_constraintStart_toStartOf="@+id/car_image"
+                        app:layout_constraintTop_toBottomOf="@+id/car_image" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/profilcontainer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Paul paul\n50 ans\nCommercial"
                         android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -194,8 +228,8 @@
                         android:layout_marginTop="8dp"
                         android:text="Coordonnées"
                         android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="@+id/textView10"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                        app:layout_constraintStart_toStartOf="@+id/profilcontainer"
+                        app:layout_constraintTop_toBottomOf="@+id/profilcontainer" />
 
                     <TextView
                         android:id="@+id/textView11"

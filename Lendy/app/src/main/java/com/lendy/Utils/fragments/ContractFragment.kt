@@ -2,6 +2,7 @@ package com.lendy.Utils.fragments
 
 import android.app.Activity
 import android.app.Fragment
+import android.app.FragmentManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class ContractFragment : Fragment()
             {
                 (this.currentActivity as MainActivity).suppOrderFragment = SuppOrderFragment()
                 //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
+                activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 DataUtils.addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).suppOrderFragment, R.id.activity_main)
             }
         }

@@ -39,13 +39,13 @@ class MainActivity : AppCompatActivity() {
     var listOfDrivers = arrayListOf<Any>()
     var listOfLocations = arrayListOf<JsonObject>()
     var mapFragment: MapFragment? = null
-    var researchFragment: ResearchFragment? = null
     var profileDetailFragment: ProfileDetailFragment? = null
     var contractFragment: ContractFragment? = null
     var messageFragment: MessagesFragment? = null
     var suppOrderFragment: SuppOrderFragment? = null
     var conversationFragment: ConversationFragment? = null
     var homeFragment: HomeFragment? = null
+    var reservationFragment: ReservationFragment? = null
     var myProfilFragment: MyProfilFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,14 +65,18 @@ class MainActivity : AppCompatActivity() {
                         if (mapFragment != null && mapFragment?.isVisible!!)
                             removeMapFragment()
 
-                        if (researchFragment != null && researchFragment?.isVisible!!)
-                            removeResearchFragment()
+                        if (reservationFragment != null && reservationFragment?.isVisible!!)
+                            removeReservationFragment()
 
                         if (messageFragment != null && messageFragment?.isVisible!!)
                             removeMessagesFragment()
 
                         if (conversationFragment != null && conversationFragment?.isVisible!!)
                             removeConversationFragment()
+
+                        if (contractFragment != null && contractFragment?.isVisible!!)
+                            removeContractFragment()
+
 
                         if (homeFragment != null && homeFragment?.isVisible!!)
                             removeHomeFragment()
@@ -85,20 +89,9 @@ class MainActivity : AppCompatActivity() {
                                 homeFragment = HomeFragment()
                                 addFragmentToActivity(fragmentManager, homeFragment, R.id.activity_main)
                             }
-                            R.id.action_ongle_2 -> {
-                                val bundle = Bundle()
-
-                                //bundle.putString("arrayLocations", listOfLocations)
-
-                                researchFragment = ResearchFragment()
-                                // set LegalsFragment Arguments
-                                //researchFragment!!.arguments = bundle
-
-                                addFragmentToActivity(fragmentManager, researchFragment, R.id.activity_main)
-                            }
                             R.id.action_ongle_3 -> {
 
-                                val bundle = Bundle()
+                                /*val bundle = Bundle()
 
                                 bundle.putString("arrayLocations", Gson().toJson(listOfLocations))
 
@@ -106,7 +99,11 @@ class MainActivity : AppCompatActivity() {
                                 // set LegalsFragment Arguments
                                 mapFragment!!.arguments = bundle
 
-                                addFragmentToActivity(fragmentManager, mapFragment, R.id.activity_main)
+                                addFragmentToActivity(fragmentManager, mapFragment, R.id.activity_main)*/
+
+                                reservationFragment = ReservationFragment()
+
+                                addFragmentToActivity(fragmentManager, reservationFragment, R.id.activity_main)
                             }
                             R.id.action_ongle_4 -> {
                                 val bundle = Bundle()
@@ -205,10 +202,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun removeResearchFragment() {
-        if (this.researchFragment != null) {
-            removeFragment(researchFragment)
-            this.researchFragment = null
+    fun removeReservationFragment() {
+        if (this.reservationFragment != null) {
+            removeFragment(reservationFragment)
+            this.reservationFragment = null
         }
     }
 
@@ -230,6 +227,13 @@ class MainActivity : AppCompatActivity() {
         if (this.conversationFragment != null) {
             removeFragment(conversationFragment)
             this.conversationFragment = null
+        }
+    }
+
+    fun removeContractFragment() {
+        if (this.contractFragment != null) {
+            removeFragment(contractFragment)
+            this.contractFragment = null
         }
     }
 
@@ -273,7 +277,7 @@ class MainActivity : AppCompatActivity() {
             showBottomNavigation()
         }
         else {
-            if (mapFragment != null || profileDetailFragment != null || researchFragment != null || messageFragment != null || myProfilFragment != null) {
+            if (reservationFragment != null || mapFragment != null || profileDetailFragment != null || messageFragment != null || myProfilFragment != null || contractFragment != null) {
                 fragmentManager.popBackStack()
                 showBottomNavigation()
                 bottom_navigation.selectedItemId = R.id.action_ongle_1

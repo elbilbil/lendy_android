@@ -9,7 +9,7 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.lendy.R;
-import com.lendy.Utils.fragments.DialogResult;
+import com.lendy.Utils.DialogResult;
 
 public class ChooseDateDialog extends AlertDialog.Builder {
     private View view;

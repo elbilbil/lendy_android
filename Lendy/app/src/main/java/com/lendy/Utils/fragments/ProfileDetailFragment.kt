@@ -14,6 +14,7 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.custom_views.SendMessageDialog
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profiledetail.*
 
 class ProfileDetailFragment : Fragment() {
@@ -49,6 +50,9 @@ class ProfileDetailFragment : Fragment() {
 
                 profilpicture.setImageDrawable(userInfo["firstImage"] as Drawable?)
                 profilname.text = user!!.firstname + " " + user!!.lastname
+                vehiculedescription.text = user!!.car?.model + "\n" + user!!.car?.types + "\n" + user!!.car?.transmission + "\n" + user!!.car?.km + " km"
+                Picasso.get().load(user!!.car?.picture).fit().into(car_image)
+                profilcontainer.text = user!!.address
             }
 
             contacter.setOnClickListener {
@@ -62,7 +66,7 @@ class ProfileDetailFragment : Fragment() {
 
                     //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
 
-                    addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).contractFragment, R.id.activity_main)
+                    addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).contractFragment, R.id.activity_main)
                 }
 
 

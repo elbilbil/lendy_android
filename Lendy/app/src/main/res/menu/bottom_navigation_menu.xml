@@ -3,27 +3,21 @@
 
     <item
         android:id="@+id/action_ongle_1"
-        android:icon="@drawable/ic_home_button"
-        android:title="Accueil" />
-
-
-    <item
-        android:id="@+id/action_ongle_2"
         android:icon="@drawable/tabbar_icon_search_unselected"
-        android:title="Recherche" />
+        android:title="" />
 
     <item
         android:id="@+id/action_ongle_3"
         android:icon="@drawable/tabbar_icon_car_theft"
-        android:title="Carte" />
+        android:title="" />
 
     <item
         android:id="@+id/action_ongle_4"
         android:icon="@drawable/tabbar_icon_talk_selected"
-        android:title="Message" />
+        android:title="" />
 
     <item
         android:id="@+id/action_ongle_5"
         android:icon="@drawable/tabbar_icon_account_unselected"
-        android:title="Profil" />
+        android:title="" />
 </menu>

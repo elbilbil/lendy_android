@@ -3,10 +3,7 @@ package com.lendy.Manager
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import com.lendy.Models.Discussion
-import com.lendy.Models.Message
-import com.lendy.Models.User
-import com.lendy.Models.Users
+import com.lendy.Models.*
 import com.lendy.Utils.DataUtils
 import org.json.JSONArray
 import javax.security.auth.callback.Callback
@@ -21,6 +18,7 @@ class DataManager
         var sharedDrivers: ArrayList<Users>? = null
         var sharedLenders: ArrayList<Users>? = null
         var sharedDiscussions: ArrayList<Discussion>? = null
+        var sharedReservations: ArrayList<Reservation>? = null
         var token: String? = null
     }
 
@@ -139,6 +137,21 @@ class DataManager
                     SharedData.sharedUser = user
                     callback.invoke(true)
                 }
+            } )
+        }
+
+        fun getReservations(context: Context?, token: String?, callback: (success: Boolean) -> Unit)
+        {
+            if (context == null || token == null)
+                return
+
+            ServiceProvider.getReservations(context, token, callback = {code, reservations ->
+
+                if (code != 200 && reservations == null)
+                    callback.invoke(false)
+                else
+                    SharedData.sharedReservations = reservations
+                    callback.invoke(true)
             } )
         }
 

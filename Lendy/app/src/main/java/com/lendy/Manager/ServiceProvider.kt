@@ -9,13 +9,10 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
-import com.lendy.Models.User
 import org.json.JSONObject
 import junit.framework.TestCase
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.lendy.Models.Discussion
-import com.lendy.Models.Message
-import com.lendy.Models.Users
+import com.lendy.Models.*
 import com.lendy.Utils.DataUtils
 import okhttp3.RequestBody
 import org.json.JSONArray
@@ -30,7 +27,8 @@ enum class Endpoints(val value: String) {
     GET_MYSELF("/myself"),
     SEND_MESSAGE("/message"),
     GET_MESSAGE("/message"),
-    DISCUSSIONS("/discussion")
+    DISCUSSIONS("/discussion"),
+    RESERVATION("/reservation")
 }
 
 enum class HTTPMethod(val value: String) {
@@ -57,8 +55,12 @@ class ServiceProvider() {
             //baseURL = "http://10.0.2.2:27031/api/users"
             //baseURL = "http://192.168.1.12:27031/api/users"
 
-            // SERVEUR DE BILLEL
+
+            // SERVEUR LOCAL DE AZIZ
             baseURL = "http://api.lendy.fr:27031/api/users"
+
+            // SERVEUR DE BILLEL
+            //baseURL = "http://api.lendy.fr:27031/api/users"
         }
 
         fun getRequest(httpMethod: HTTPMethod, endpoint: Endpoints, queryParameters: java.util.ArrayList<java.util.HashMap<String, String>>?, bodyParams: java.util.HashMap<String, Any>?, token: String?): Request? {
@@ -267,6 +269,31 @@ class ServiceProvider() {
 
                     for (i in 0 until jsonArray.length()) {
                         val obj = Gson().fromJson(jsonArray.optJSONObject(i).toString(), Discussion::class.java)
+                        arraylist.add(obj)
+                    }
+                    callback?.invoke(response.code(), arraylist)
+                } else
+                    callback?.invoke(400, null)
+            })
+        }
+
+        fun getReservations(context: Context?, token: String?, callback: ((code: Int, reservations: ArrayList<Reservation>?) -> Unit)?) {
+
+            // Request with Endpoint /users/anonymous and with current userId in Url parameters
+            val request = ServiceProvider.getRequest(HTTPMethod.GET, Endpoints.RESERVATION, null, null, token)
+                    ?: return
+
+            performRequest(request, context, callback = { response, exception ->
+                val body_temp = response?.body()?.string()
+                if (response != null && exception == null && response.code() == 200) {
+                    val body = body_temp
+                    val jsonArray: JSONArray = JSONArray(body)
+                    val arraylist: ArrayList<Reservation> = arrayListOf()
+                    var objectMapper: ObjectMapper = ObjectMapper()
+                    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+                    for (i in 0 until jsonArray.length()) {
+                        val obj = Gson().fromJson(jsonArray.optJSONObject(i).toString(), Reservation::class.java)
                         arraylist.add(obj)
                     }
                     callback?.invoke(response.code(), arraylist)

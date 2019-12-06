@@ -4,6 +4,7 @@ package com.lendy.Utils.adapters
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
@@ -11,9 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.gson.Gson
 import com.lendy.Controllers.MainActivity
+import com.lendy.Manager.DataManager
+import com.lendy.Models.Member
+import com.lendy.Models.Reservation
 import com.lendy.Models.Users
 import com.lendy.R
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
@@ -25,38 +30,22 @@ import com.lendy.Utils.fragments.ProfileDetailFragment
  * @param: arrayListOfElements: ArrayList of Object SKMRanking
  * @param: activity : current activity
  */
-class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : Activity) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()
+class ReservationAdapter(val arrayListOfReservations: ArrayList<Reservation>, val activity : Activity) : RecyclerView.Adapter<ReservationAdapter.ViewHolder>()
 {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.container.setOnClickListener { _ ->
-            run {
-                val userInfos: HashMap<String?, Any?> = hashMapOf()
-                userInfos["firstImage"] = holder.firstImage?.drawable
-                userInfos["user"] = arrayListOfElements[position]
-                // Faire en sorte que le fragment ProfileDetailFragment soit en premier plan et non en second plan derriere l'activity
-                //Ouvrir fragment au clic sur un élément en chargeant son contenu
-                //Faire le Search en cliquant dessus
-
-                if (activity is MainActivity) {
-                    val bundle = Bundle()
-                    bundle.putSerializable("infos", userInfos)
-                    activity.profileDetailFragment = ProfileDetailFragment()
-                    activity.profileDetailFragment!!.arguments = bundle
-                    addFragmentToActivity(activity.fragmentManager, activity.profileDetailFragment, R.id.activity_main)
-                }
-            }
+        for (member : Member in arrayListOfReservations[position].members)
+        {
+           if (!member._id.equals(DataManager.SharedData.sharedUser?._id))
+           {
+               holder.firstImage?.setImageResource(R.drawable.avatar_placeholder)
+               holder.name?.text = member.firstname + " " + member.lastname
+           }
         }
-
-        if (arrayListOfElements[position].type != "emprunteur")
-            holder.firstImage?.setImageResource(R.drawable.voiture_placeholder)
-        else
-            holder.firstImage?.setImageResource(R.drawable.avatar_placeholder)
-        holder.name?.text = arrayListOfElements[position].firstname + " " + arrayListOfElements[position].lastname
     }
 
     override fun getItemCount(): Int {
-        return arrayListOfElements.size
+        return arrayListOfReservations.size
     }
 
     // Créer des détenteurs de vue. Chaque détenteur de vue est chargé d'afficher un seul élément avec une vue
