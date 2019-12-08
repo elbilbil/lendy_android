@@ -11,7 +11,7 @@ class Users : Serializable
     var firstname: String? = null
     var username: String? = null
     var type: String? = null
-    var isDriver: Boolean? = null
+    //var isDriver: Boolean? = null
     var status: String? = null
     var cars: String? = null
     var lastConnection: String? = null

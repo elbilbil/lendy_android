@@ -28,7 +28,7 @@ enum class Endpoints(val value: String) {
     SEND_MESSAGE("/message"),
     GET_MESSAGE("/message"),
     DISCUSSIONS("/discussion"),
-    RESERVATION("/reservation")
+    GET_RESERVATION("/reservation")
 }
 
 enum class HTTPMethod(val value: String) {
@@ -280,7 +280,7 @@ class ServiceProvider() {
         fun getReservations(context: Context?, token: String?, callback: ((code: Int, reservations: ArrayList<Reservation>?) -> Unit)?) {
 
             // Request with Endpoint /users/anonymous and with current userId in Url parameters
-            val request = ServiceProvider.getRequest(HTTPMethod.GET, Endpoints.RESERVATION, null, null, token)
+            val request = ServiceProvider.getRequest(HTTPMethod.GET, Endpoints.GET_RESERVATION, null, null, token)
                     ?: return
 
             performRequest(request, context, callback = { response, exception ->

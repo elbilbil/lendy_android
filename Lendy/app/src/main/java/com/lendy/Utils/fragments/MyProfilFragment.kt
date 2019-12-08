@@ -20,7 +20,6 @@ import android.graphics.Bitmap
 import kotlinx.android.synthetic.main.myprofil_fragment.*
 import kotlinx.android.synthetic.main.profiledetail.profilname
 import kotlinx.android.synthetic.main.profiledetail.profilpicture
-import kotlinx.android.synthetic.main.profiledetail.textView11
 import java.io.IOException
 
 class MyProfilFragment : Fragment() {
