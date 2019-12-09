@@ -84,8 +84,6 @@ class SuppOrderFragment : Fragment() {
                 locationObj.latitude = 48.856977499999999
                 locationObj.longitude = 2.3296994
 
-                /*"place":{"address":"13 Rue de l'Université, 75007 Paris, France","longitude":2.3296994,"latitude":48.856977499999999}
-                ,"to":1575932363.105051,"since":1575932363.105051,"time":1576018757,"user":"5cd98594343097580c04730c"}*/
                 ServiceProvider.addReservation(activity, DataManager.SharedData.token, userId,
                         dateTimestamp.toString(), dateTimestamp.toString(), locationObj,
                         (System.currentTimeMillis() / 1000).toString(),
@@ -93,7 +91,7 @@ class SuppOrderFragment : Fragment() {
                             if (code == 200) {
                                 activity.runOnUiThread {
                                     if (this.currentActivity is MainActivity)
-                                        (this.currentActivity as MainActivity).showDialog("Contrat signé avec succès, Rendez-vous dans vos reservations !")
+                                        (this.currentActivity as MainActivity).showDialog("Votre demande de rendez-vous à été envoyée !")
                                     this.currentActivity!!.onBackPressed()
                                 }
                             }
