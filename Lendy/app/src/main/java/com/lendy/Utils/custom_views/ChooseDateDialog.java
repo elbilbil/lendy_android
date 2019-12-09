@@ -37,13 +37,14 @@ public class ChooseDateDialog extends AlertDialog.Builder {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                calendarView.getDate();
                 dateString = String.format("%d/%d/%d", i2, i1 + 1, i);
             }
         });
 
         validate.setOnClickListener(v -> {
             if (dateString != null && index != null) {
-                dialogResult.getDialogResult(dateString, index);
+                dialogResult.getDialogResult(dateString, index, calendarView.getDate() / 1000);
                 this.alertDialog.dismiss();
             }
         });
