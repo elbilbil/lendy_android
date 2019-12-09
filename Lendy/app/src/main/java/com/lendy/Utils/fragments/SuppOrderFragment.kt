@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import com.lendy.Controllers.MainActivity
+import com.lendy.Manager.DataManager
+import com.lendy.Manager.ServiceProvider
 import com.lendy.R
 import com.lendy.Utils.DataUtils
 import com.lendy.Utils.DialogResult
@@ -24,6 +26,7 @@ class SuppOrderFragment : Fragment()
     private var currentActivity: Activity? = null
     private var currentView: View? = null
     private var dialogResult: DialogResult? = null
+    private var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,9 @@ class SuppOrderFragment : Fragment()
 
         this.currentView = view
         this.currentActivity = this.activity
+
+        if (this.arguments.getString("userId") != null)
+            userId = this.arguments.getString("userId") as String
 
         dialogResult = object : DialogResult {
             override fun getHourResult(hour: Int, minute: Int) {
@@ -69,7 +75,6 @@ class SuppOrderFragment : Fragment()
         valider.setOnClickListener {
 
             if ((choose_place.text == null || choose_place.text.toString().equals("")) &&
-                    (complementary_infos.text == null || complementary_infos.text.toString().equals("")) &&
                     (choose_date_supp.text == null || choose_date_supp.text.toString().equals("")) &&
                     (choose_hour.text == null || choose_hour.text.toString().equals("")))
             {
@@ -77,6 +82,14 @@ class SuppOrderFragment : Fragment()
             }
             else
             {
+                // TODO APPELER WS ADD RESERVATION
+
+                // userId ou alors le currend userId save dans les prefs ?
+                // Faire le champs To Date ?
+                // Place convertir l'adresse en location ? ( GO METTRE EN DUR une location )
+                // Pareil pour time ?
+                ServiceProvider.addReservation(activity, DataManager.SharedData.token, userId,)
+
                 if (this.currentActivity is MainActivity)
                     (this.currentActivity as MainActivity).showDialog("Contrat signé avec succès, Rendez-vous dans vos reservations !")
                 this.currentActivity!!.onBackPressed()

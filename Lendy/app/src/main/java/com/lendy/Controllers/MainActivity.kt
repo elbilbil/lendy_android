@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     var homeFragment: HomeFragment? = null
     var reservationFragment: ReservationFragment? = null
     var myProfilFragment: MyProfilFragment? = null
+    var tutoFragment: TutoFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         homeFragment = HomeFragment()
         addFragmentToActivity(fragmentManager, homeFragment, R.id.activity_main)
 
+        supportFragmentManager
         checkPermission()
         //initPubnub()
 
@@ -83,6 +85,9 @@ class MainActivity : AppCompatActivity() {
 
                         if (myProfilFragment != null && myProfilFragment?.isVisible!!)
                             removeMyProfilFragment()
+
+                        if (tutoFragment != null && tutoFragment?.isVisible!!)
+                            removeTutoFragment()
 
                         when (item.itemId) {
                             R.id.action_ongle_1 -> {
@@ -251,6 +256,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun removeTutoFragment() {
+        if (this.tutoFragment != null) {
+            removeFragment(tutoFragment)
+            this.tutoFragment = null
+        }
+    }
+
     private fun initPubnub() {
         val pnConfiguration = PNConfiguration()
         pnConfiguration.subscribeKey = "sub-c-32cb3dba-f4bc-11e8-aba4-3a82e8287a69"
@@ -277,7 +289,7 @@ class MainActivity : AppCompatActivity() {
             showBottomNavigation()
         }
         else {
-            if (reservationFragment != null || mapFragment != null || profileDetailFragment != null || messageFragment != null || myProfilFragment != null || contractFragment != null) {
+            if (reservationFragment != null || mapFragment != null || profileDetailFragment != null || messageFragment != null || myProfilFragment != null || contractFragment != null || tutoFragment != null) {
                 fragmentManager.popBackStack()
                 showBottomNavigation()
                 bottom_navigation.selectedItemId = R.id.action_ongle_1

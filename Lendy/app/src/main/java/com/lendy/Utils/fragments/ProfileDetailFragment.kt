@@ -62,11 +62,13 @@ class ProfileDetailFragment : Fragment() {
 
             reserver.setOnClickListener {
                 if (this.currentActivity is MainActivity) {
-                    (this.currentActivity as MainActivity).contractFragment = ContractFragment()
+                    val bundle = Bundle()
+                    bundle.putString("userId", user?.id)
+                    (this.currentActivity as MainActivity).tutoFragment = TutoFragment()
 
-                    //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
+                    (this.currentActivity as MainActivity).tutoFragment?.arguments = bundle
 
-                    addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).contractFragment, R.id.activity_main)
+                    addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).tutoFragment, R.id.activity_main)
                 }
 
 

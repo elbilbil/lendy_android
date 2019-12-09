@@ -7,17 +7,33 @@
     android:focusable="true"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/messagetype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Vos contrats"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messagetype">
 
         <!-- 1 | Add TabLayout to handle tabs -->
         <android.support.design.widget.TabLayout
             android:id="@+id/activity_main_tabs"
+            style="@style/Widget.Design.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Design.TabLayout"
             android:background="#B6C9F1"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="#fff"
@@ -43,8 +59,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerReservations"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
     </LinearLayout>

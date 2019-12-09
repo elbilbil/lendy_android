@@ -28,7 +28,8 @@ enum class Endpoints(val value: String) {
     SEND_MESSAGE("/message"),
     GET_MESSAGE("/message"),
     DISCUSSIONS("/discussion"),
-    GET_RESERVATION("/reservation")
+    GET_RESERVATION("/reservation"),
+    ADD_RESERVATION("/reservation")
 }
 
 enum class HTTPMethod(val value: String) {
@@ -269,6 +270,41 @@ class ServiceProvider() {
 
                     for (i in 0 until jsonArray.length()) {
                         val obj = Gson().fromJson(jsonArray.optJSONObject(i).toString(), Discussion::class.java)
+                        arraylist.add(obj)
+                    }
+                    callback?.invoke(response.code(), arraylist)
+                } else
+                    callback?.invoke(400, null)
+            })
+        }
+
+
+        fun addReservation(context: Context?, token: String?, userId: String?, sinceDate: String?, toDate: String?,
+                           place: String?, time: String?,
+                           callback: ((code: Int, reservations: ArrayList<Reservation>?) -> Unit)?) {
+
+            /*var userRegistered: HashMap<String, Any> = hashMapOf()
+            userRegistered["userId"] = user?.firstname as Any
+            userRegistered["sinceDate"] = user.lastname as Any
+            userRegistered["toDate"] = user.username as Any
+            userRegistered["place"] = user.password as Any
+            userRegistered["time"] = user.type as Any*/
+
+            // Request with Endpoint /users/anonymous and with current userId in Url parameters
+            val request = ServiceProvider.getRequest(HTTPMethod.POST, Endpoints.ADD_RESERVATION, null, null, token)
+                    ?: return
+
+            performRequest(request, context, callback = { response, exception ->
+                val body_temp = response?.body()?.string()
+                if (response != null && exception == null && response.code() == 200) {
+                    val body = body_temp
+                    val jsonArray: JSONArray = JSONArray(body)
+                    val arraylist: ArrayList<Reservation> = arrayListOf()
+                    var objectMapper: ObjectMapper = ObjectMapper()
+                    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+                    for (i in 0 until jsonArray.length()) {
+                        val obj = Gson().fromJson(jsonArray.optJSONObject(i).toString(), Reservation::class.java)
                         arraylist.add(obj)
                     }
                     callback?.invoke(response.code(), arraylist)
