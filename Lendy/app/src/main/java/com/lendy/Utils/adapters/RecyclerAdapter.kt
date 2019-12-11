@@ -18,6 +18,7 @@ import com.lendy.Models.Users
 import com.lendy.R
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.fragments.ProfileDetailFragment
+import com.squareup.picasso.Picasso
 
 /**
  * Class RankingAdapter , C'est ici que les données du RecyclerView vont être traitées
@@ -48,10 +49,10 @@ class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : 
             }
         }
 
-        if (arrayListOfElements[position].type != "emprunteur")
-            holder.firstImage?.setImageResource(R.drawable.voiture_placeholder)
-        else
-            holder.firstImage?.setImageResource(R.drawable.avatar_placeholder)
+        holder.firstImage?.setImageResource(R.drawable.ic_account_circle)
+
+        Picasso.get().load(arrayListOfElements[position].car?.picture).fit().into(holder.firstImage)
+
         holder.name?.text = arrayListOfElements[position].firstname + " " + arrayListOfElements[position].lastname
     }
 

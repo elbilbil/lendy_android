@@ -51,7 +51,7 @@ class ProfileDetailFragment : Fragment() {
                 profilpicture.setImageDrawable(userInfo["firstImage"] as Drawable?)
                 profilname.text = user!!.firstname + " " + user!!.lastname
                 vehiculedescription.text = user!!.car?.model + "\n" + user!!.car?.types + "\n" + user!!.car?.transmission + "\n" + user!!.car?.km + " km"
-                Picasso.get().load(user!!.car?.picture).fit().into(car_image)
+            Picasso.get().load(user!!.car?.picture).fit().into(car_image)
                 profilcontainer.text = user!!.address
             }
 

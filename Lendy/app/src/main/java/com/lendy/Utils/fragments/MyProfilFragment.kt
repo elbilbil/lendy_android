@@ -44,9 +44,8 @@ class MyProfilFragment : Fragment() {
         val cA = this.currentActivity
 
         val b = this.arguments
-        Log.e("lol", DataManager.SharedData.sharedUser.toString()!!)
         profilname.text = DataManager.SharedData.sharedUser!!.firstname + " " + DataManager.SharedData.sharedUser!!.lastname
-        textView11.text = DataManager.SharedData.sharedUser!!.username + "\\n0606060606\\nMarseille, FR"
+        textView11.text = DataManager.SharedData.sharedUser!!.username + "\n"
 
         profilpicture.setOnClickListener {
             val intent = Intent()

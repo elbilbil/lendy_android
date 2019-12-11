@@ -43,14 +43,26 @@ class ReservationFragment : Fragment()
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tab.text!!.equals("En attente"))
                 {
+                    if (arrayListOfPending.isNullOrEmpty())
+                        no_items.visibility = View.VISIBLE
+                    else
+                        no_items.visibility = View.GONE
                     updateAdapter(arrayListOfPending)
                 }
                 else if (tab.text!!.equals("En cours"))
                 {
+                    if (arrayListOfNow.isNullOrEmpty())
+                        no_items.visibility = View.VISIBLE
+                    else
+                        no_items.visibility = View.GONE
                     updateAdapter(arrayListOfNow)
                 }
                 else if (tab.text!!.equals("Passées"))
                 {
+                    if (arrayListOfPassed.isNullOrEmpty())
+                        no_items.visibility = View.VISIBLE
+                    else
+                        no_items.visibility = View.GONE
                     updateAdapter(arrayListOfPassed)
                 }
             }
@@ -71,6 +83,10 @@ class ReservationFragment : Fragment()
             recyclerReservations.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             //recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
 
+            if (arrayListOfPending.isNullOrEmpty())
+                no_items.visibility = View.VISIBLE
+            else
+                no_items.visibility = View.GONE
             updateAdapter(arrayListOfPending)
         }
     }
@@ -85,7 +101,9 @@ class ReservationFragment : Fragment()
         DataManager.getReservations(activity, DataManager.SharedData.token, callback = {
             if (it)
             {
-                if (DataManager.SharedData.sharedReservations != null) {
+                if (!DataManager.SharedData.sharedReservations.isNullOrEmpty()) {
+                    no_items.visibility = View.GONE
+
                     for (reservation: Reservation in DataManager.SharedData.sharedReservations!!) {
 
                         when (reservation.state)
@@ -96,6 +114,8 @@ class ReservationFragment : Fragment()
                         }
                     }
                 }
+                else
+                    no_items.visibility = View.VISIBLE
 
                 activity.runOnUiThread {
                     initRecyclerView()
