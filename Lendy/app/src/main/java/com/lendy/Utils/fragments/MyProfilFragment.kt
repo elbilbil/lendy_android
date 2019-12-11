@@ -1,6 +1,7 @@
 package com.lendy.Utils.fragments
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.content.Intent
 import android.widget.Toast
 import android.provider.MediaStore
 import android.graphics.Bitmap
+import com.lendy.Utils.DataUtils
 import kotlinx.android.synthetic.main.myprofil_fragment.*
 import kotlinx.android.synthetic.main.profiledetail.profilname
 import kotlinx.android.synthetic.main.profiledetail.profilpicture
@@ -44,13 +46,29 @@ class MyProfilFragment : Fragment() {
         val b = this.arguments
         Log.e("lol", DataManager.SharedData.sharedUser.toString()!!)
         profilname.text = DataManager.SharedData.sharedUser!!.firstname + " " + DataManager.SharedData.sharedUser!!.lastname
-        textView11.text = DataManager.SharedData.sharedUser!!.username +"\\n0606060606\\nMarseille, FR"
+        textView11.text = DataManager.SharedData.sharedUser!!.username + "\\n0606060606\\nMarseille, FR"
 
         profilpicture.setOnClickListener {
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Choisissez une image"), SELECT_IMAGE)
+        }
+
+        button_logout.setOnClickListener {
+            activity.runOnUiThread {
+                AlertDialog.Builder(activity)
+                        .setMessage("Voulez-vous vraiment vous déconnecter ?")
+                        .setPositiveButton(android.R.string.yes) { dialog, _ ->
+                            DataUtils.writeStringOnPreferences(activity, "username", "")
+                            DataUtils.writeStringOnPreferences(activity, "password", "")
+                            DataUtils.writeStringOnPreferences(activity, "token", "")
+                            startActivity(Intent(activity, ConnectActivity::class.java))
+                            activity.finish()
+                        }
+                        .setNegativeButton("Non", null)
+                        .show()
+            }
         }
 
         /*if (b.getSerializable("infos") != null) {

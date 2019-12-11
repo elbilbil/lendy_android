@@ -9,10 +9,11 @@
     android:focusable="true"
     android:background="@drawable/bg_login">
 
-
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:windowSoftInputMode="adjustResize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -225,4 +226,14 @@
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/button_logout"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/bt_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
