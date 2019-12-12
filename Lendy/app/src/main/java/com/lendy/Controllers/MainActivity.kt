@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     var profileDetailFragment: ProfileDetailFragment? = null
     var contractFragment: ContractFragment? = null
     var messageFragment: MessagesFragment? = null
-    //var suppOrderFragment: SuppOrderFragment? = null
+    //var SuppOrderActivity: SuppOrderActivity? = null
     var conversationFragment: ConversationFragment? = null
     var homeFragment: HomeFragment? = null
     var reservationFragment: ReservationFragment? = null

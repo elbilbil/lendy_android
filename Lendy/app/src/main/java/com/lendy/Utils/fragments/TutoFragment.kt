@@ -3,12 +3,12 @@ package com.lendy.Utils.fragments
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.lendy.Controllers.MainActivity
+import com.lendy.Controllers.SuppOrderActivity
 import com.lendy.R
 import com.lendy.Utils.adapters.TutorialPagerAdapter
 import kotlinx.android.synthetic.main.tuto_resa_fragment.*
@@ -30,17 +30,17 @@ class TutoFragment : Fragment() {
 
         goNext.setOnClickListener {
             if (activity is MainActivity) {
-                val intent = Intent(activity, SuppOrderFragment::class.java)
+                val intent = Intent(activity, SuppOrderActivity::class.java)
                 intent.putExtra("userId", userId)
                 activity.startActivity(intent)
                 /* val bundle = Bundle()
                  bundle.putString("userId", userId)
-                 (activity as MainActivity).suppOrderFragment = SuppOrderFragment()
+                 (activity as MainActivity).SuppOrderActivity = SuppOrderActivity()
 
-                 (this.activity as MainActivity).suppOrderFragment?.arguments = bundle
+                 (this.activity as MainActivity).SuppOrderActivity?.arguments = bundle
 
                  activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                 DataUtils.addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).suppOrderFragment, R.id.activity_main)*/
+                 DataUtils.addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).SuppOrderActivity, R.id.activity_main)*/
             }
         }
     }

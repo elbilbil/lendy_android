@@ -53,7 +53,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Utils.fragments.SuppOrderFragment"
+            android:name=".Controllers.SuppOrderActivity"
             android:screenOrientation="portrait" />
     </application>
 

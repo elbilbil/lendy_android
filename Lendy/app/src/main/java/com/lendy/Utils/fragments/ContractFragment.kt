@@ -31,10 +31,10 @@ class ContractFragment : Fragment()
 
             if (this.currentActivity is MainActivity)
             {
-                /*(this.currentActivity as MainActivity).suppOrderFragment = SuppOrderFragment()
+                /*(this.currentActivity as MainActivity).SuppOrderActivity = SuppOrderActivity()
                 //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
                 activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                DataUtils.addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).suppOrderFragment, R.id.activity_main)*/
+                DataUtils.addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).SuppOrderActivity, R.id.activity_main)*/
             }
         }
 
