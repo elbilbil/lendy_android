@@ -102,7 +102,8 @@ class ReservationFragment : Fragment()
             if (it)
             {
                 if (!DataManager.SharedData.sharedReservations.isNullOrEmpty()) {
-                    no_items.visibility = View.GONE
+                    if (no_items != null)
+                        no_items.visibility = View.GONE
 
                     for (reservation: Reservation in DataManager.SharedData.sharedReservations!!) {
 
@@ -114,8 +115,10 @@ class ReservationFragment : Fragment()
                         }
                     }
                 }
-                else
-                    no_items.visibility = View.VISIBLE
+                else {
+                    if (no_items != null)
+                        no_items.visibility = View.VISIBLE
+                }
 
                 activity.runOnUiThread {
                     initRecyclerView()

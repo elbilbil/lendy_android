@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     var mapFragment: MapFragment? = null
     var profileDetailFragment: ProfileDetailFragment? = null
     var contractFragment: ContractFragment? = null
+    var signatureContractFragment: SignatureContractFragment? = null
     var messageFragment: MessagesFragment? = null
     //var SuppOrderActivity: SuppOrderActivity? = null
     var conversationFragment: ConversationFragment? = null
@@ -78,6 +79,8 @@ class MainActivity : AppCompatActivity() {
                         if (contractFragment != null && contractFragment?.isVisible!!)
                             removeContractFragment()
 
+                        if (signatureContractFragment != null && signatureContractFragment?.isVisible!!)
+                            removeSignatureFragment()
 
                         if (homeFragment != null && homeFragment?.isVisible!!)
                             removeHomeFragment()
@@ -241,6 +244,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun removeSignatureFragment() {
+        if (this.signatureContractFragment != null) {
+            removeFragment(signatureContractFragment)
+            this.signatureContractFragment = null
+        }
+    }
+
     fun removeHomeFragment() {
         if (this.homeFragment != null) {
             removeFragment(homeFragment)
@@ -294,7 +304,7 @@ class MainActivity : AppCompatActivity() {
             showBottomNavigation()
         }
         else {
-            if (reservationFragment != null || mapFragment != null || profileDetailFragment != null || messageFragment != null || myProfilFragment != null || contractFragment != null || tutoFragment != null) {
+            if (reservationFragment != null || mapFragment != null || profileDetailFragment != null || messageFragment != null || myProfilFragment != null || contractFragment != null || signatureContractFragment != null || tutoFragment != null) {
                 fragmentManager.popBackStack()
                 showBottomNavigation()
                 bottom_navigation.selectedItemId = R.id.action_ongle_1

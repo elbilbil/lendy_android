@@ -51,9 +51,11 @@ class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : 
             }
         }
 
-        holder.firstImage?.setImageResource(R.drawable.ic_account_circle)
 
-        Picasso.get().load(arrayListOfElements[position].car?.picture).fit().into(holder.firstImage)
+        if (arrayListOfElements[position].car?.picture.isNullOrEmpty() || position == 0)
+            holder.firstImage?.setImageResource(R.drawable.ic_account_circle)
+        else
+            Picasso.get().load(arrayListOfElements[position].car?.picture).fit().into(holder.firstImage)
 
         holder.name?.text = arrayListOfElements[position].firstname + " " + arrayListOfElements[position].lastname
     }

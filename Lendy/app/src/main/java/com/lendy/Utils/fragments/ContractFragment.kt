@@ -40,16 +40,17 @@ class ContractFragment : Fragment()
             val sendMessageDialog = SendMessageDialog(activity, null, DataManager.SharedData.sharedDetailMember)
             sendMessageDialog.show()
         }
-        /*sign.setOnClickListener {
+
+        sign.setOnClickListener {
 
             if (this.currentActivity is MainActivity)
             {
-                /*(this.currentActivity as MainActivity).SuppOrderActivity = SuppOrderActivity()
+                (this.currentActivity as MainActivity).signatureContractFragment = SignatureContractFragment()
                 //(this.currentActivity as MainActivity).contractFragment!!.arguments = bundle
                 activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                DataUtils.addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).SuppOrderActivity, R.id.activity_main)*/
+                DataUtils.addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).signatureContractFragment, R.id.activity_main)
             }
-        }*/
+        }
 
         if (this.currentActivity is MainActivity)
             (this.currentActivity as MainActivity).hideBottomNavigation()
