@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit
 import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
 import org.json.JSONObject
-import junit.framework.TestCase
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lendy.Models.*
 import com.lendy.Utils.DataUtils

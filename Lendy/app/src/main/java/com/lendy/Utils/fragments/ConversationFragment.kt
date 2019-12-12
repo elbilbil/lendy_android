@@ -9,12 +9,12 @@ import android.os.Bundle
 import android.view.*
 import com.lendy.Controllers.*
 import com.lendy.Manager.DataManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lendy.Models.Message
 import com.lendy.Utils.DataUtils
 import com.lendy.Utils.adapters.ConversationAdapter
 import kotlinx.android.synthetic.main.conversation_fragment.*
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lendy.R

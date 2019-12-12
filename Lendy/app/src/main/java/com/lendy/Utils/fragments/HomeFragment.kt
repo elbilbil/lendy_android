@@ -16,9 +16,9 @@ import kotlinx.android.synthetic.main.register.*
 import android.content.Intent.getIntent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.support.v4.app.NotificationCompat.getExtras
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.app.NotificationCompat.getExtras
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import com.lendy.Utils.DataUtils
 import com.lendy.Utils.adapters.RecyclerAdapter

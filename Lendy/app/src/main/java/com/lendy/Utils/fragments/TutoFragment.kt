@@ -1,16 +1,15 @@
 package com.lendy.Utils.fragments
 
 import android.app.Fragment
-import android.app.FragmentManager
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.ViewPager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.ViewPager
 import com.lendy.Controllers.MainActivity
 import com.lendy.R
-import com.lendy.Utils.DataUtils
 import com.lendy.Utils.adapters.TutorialPagerAdapter
 import kotlinx.android.synthetic.main.tuto_resa_fragment.*
 
@@ -30,16 +29,18 @@ class TutoFragment : Fragment() {
             userId = this.arguments.getString("userId") as String
 
         goNext.setOnClickListener {
-            if (activity is MainActivity)
-            {
-                val bundle = Bundle()
-                bundle.putString("userId", userId)
-                (activity as MainActivity).suppOrderFragment = SuppOrderFragment()
+            if (activity is MainActivity) {
+                val intent = Intent(activity, SuppOrderFragment::class.java)
+                intent.putExtra("userId", userId)
+                activity.startActivity(intent)
+                /* val bundle = Bundle()
+                 bundle.putString("userId", userId)
+                 (activity as MainActivity).suppOrderFragment = SuppOrderFragment()
 
-                (this.activity as MainActivity).suppOrderFragment?.arguments = bundle
+                 (this.activity as MainActivity).suppOrderFragment?.arguments = bundle
 
-                activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                DataUtils.addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).suppOrderFragment, R.id.activity_main)
+                 activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                 DataUtils.addFragmentToActivity(activity.fragmentManager, (activity as MainActivity).suppOrderFragment, R.id.activity_main)*/
             }
         }
     }

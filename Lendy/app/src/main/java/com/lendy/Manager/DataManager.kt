@@ -19,6 +19,7 @@ class DataManager
         var sharedLenders: ArrayList<Users>? = null
         var sharedDiscussions: ArrayList<Discussion>? = null
         var sharedReservations: ArrayList<Reservation>? = null
+        var sharedDetailUser: HashMap<String?, Any?>? = null
         var token: String? = null
     }
 

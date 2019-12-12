@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="@drawable/bg_login"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/messagetype">
 
         <!-- 1 | Add TabLayout to handle tabs -->
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/activity_main_tabs"
             style="@style/Widget.Design.TabLayout"
             android:layout_width="match_parent"
@@ -40,28 +40,28 @@
             app:tabSelectedTextColor="#fff"
             app:tabTextColor="#D4E0F8">
 
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="En attente" />
 
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="En cours" />
 
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Passées" />
 
-        </android.support.design.widget.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReservations"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"></android.support.v7.widget.RecyclerView>
+            android:layout_marginBottom="50dp"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
@@ -76,4 +76,4 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout4"
         app:srcCompat="@drawable/plecholder_no_contrat" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

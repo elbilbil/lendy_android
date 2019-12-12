@@ -5,8 +5,8 @@ import android.app.AlertDialog
 import android.app.Fragment
 import android.app.FragmentManager
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

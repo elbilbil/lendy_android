@@ -1,8 +1,8 @@
 package com.lendy.Utils.adapters
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.lendy.Utils.fragments.TutoFragment
 import com.lendy.Utils.fragments.ViewPagerFragment
 import com.lendy.Utils.fragments.ViewPagerFragment2

@@ -51,6 +51,10 @@
         <activity
             android:name=".Controllers.MainActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Utils.fragments.SuppOrderFragment"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

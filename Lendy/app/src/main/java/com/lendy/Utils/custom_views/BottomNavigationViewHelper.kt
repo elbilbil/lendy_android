@@ -1,9 +1,9 @@
 package com.lendy.Utils.custom_views
 
 import android.annotation.SuppressLint
-import android.support.design.internal.BottomNavigationItemView
-import android.support.design.internal.BottomNavigationMenuView
-import android.support.design.widget.BottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.util.Log
 
 object BottomNavigationViewHelper {
@@ -18,7 +18,7 @@ object BottomNavigationViewHelper {
             for (i in 0 until menuView.childCount) {
                 val item = menuView.getChildAt(i) as BottomNavigationItemView
 
-                item.setShiftingMode(false)
+                item.setShifting(false)
                 // set once again checked value, so view will be updated
 
                 item.setChecked(item.itemData.isChecked)

@@ -1,15 +1,19 @@
 package com.lendy.Utils.fragments
 
-import android.app.Activity
-import android.app.Fragment
+import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
-import com.lendy.Controllers.MainActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.lendy.Manager.DataManager
 import com.lendy.Manager.ServiceProvider
 import com.lendy.Models.LocationObj
@@ -18,31 +22,27 @@ import com.lendy.Utils.DataUtils
 import com.lendy.Utils.DialogResult
 import com.lendy.Utils.custom_views.ChooseDateDialog
 import kotlinx.android.synthetic.main.supp_order_fragment.*
+import java.util.*
 
-class SuppOrderFragment : Fragment() {
-    private var currentActivity: Activity? = null
+
+class SuppOrderFragment : AppCompatActivity() {
     private var currentView: View? = null
     private var dialogResult: DialogResult? = null
     private var userId: String = ""
     private var dateTimestamp: Long = 0
+    private var placesClient: PlacesClient? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-    }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.supp_order_fragment, container, false)
-    }
+        setContentView(R.layout.supp_order_fragment)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        initPlaces()
 
-        this.currentView = view
-        this.currentActivity = this.activity
-
-        if (this.arguments.getString("userId") != null)
-            userId = this.arguments.getString("userId") as String
+        val extras = intent.extras
+        if (extras != null) {
+            userId = extras.getString("userId")
+        }
 
         dialogResult = object : DialogResult {
             override fun getHourResult(hour: Int, minute: Int) {
@@ -55,12 +55,12 @@ class SuppOrderFragment : Fragment() {
         }
 
         date_supp.setOnClickListener {
-            val datedialog = ChooseDateDialog(activity, dialogResult, 1)
+            val datedialog = ChooseDateDialog(this, dialogResult, 1)
             datedialog.show()
         }
 
         hour_supp.setOnClickListener {
-            DataUtils.showHourPicker(this.currentActivity, dialogResult = object : DialogResult {
+            DataUtils.showHourPicker(this, dialogResult = object : DialogResult {
                 override fun getHourResult(hour: Int, minute: Int) {
                     choose_hour.setText(hour.toString() + "h" + minute.toString())
                 }
@@ -76,7 +76,7 @@ class SuppOrderFragment : Fragment() {
             if ((choose_place.text == null || choose_place.text.toString().equals("")) &&
                     (choose_date_supp.text == null || choose_date_supp.text.toString().equals("")) &&
                     (choose_hour.text == null || choose_hour.text.toString().equals(""))) {
-                Toast.makeText(this.currentActivity, "Vous devez renseigner tous les champs avant de valider", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Vous devez renseigner tous les champs avant de valider", Toast.LENGTH_SHORT).show()
             } else {
 
                 val locationObj = LocationObj()
@@ -84,23 +84,60 @@ class SuppOrderFragment : Fragment() {
                 locationObj.latitude = 48.856977499999999
                 locationObj.longitude = 2.3296994
 
-                ServiceProvider.addReservation(activity, DataManager.SharedData.token, userId,
+                ServiceProvider.addReservation(this, DataManager.SharedData.token, userId,
                         dateTimestamp.toString(), dateTimestamp.toString(), locationObj,
                         (System.currentTimeMillis() / 1000).toString(),
                         callback = { code, msg ->
                             if (code == 200) {
-                                activity.runOnUiThread {
-                                    if (this.currentActivity is MainActivity)
-                                        (this.currentActivity as MainActivity).showDialog("Votre demande de rendez-vous à été envoyée !")
-                                    this.currentActivity!!.onBackPressed()
+                                this.runOnUiThread {
+                                    this.showDialog("Votre demande de rendez-vous à été envoyée !")
+                                    Handler().postDelayed(Runnable {
+                                        finish()
+                                        this.onBackPressed()
+                                    }, 2000)
                                 }
                             }
                         });
             }
         }
-
-        if (this.currentActivity is MainActivity)
-            (this.currentActivity as MainActivity).hideBottomNavigation()
     }
 
+    fun initPlaces()
+    {
+        if (!Places.isInitialized())
+            Places.initialize(this, "AIzaSyBTfZuvJ8vp6yHyZTnqYy2SqEtwO8C_N5c");
+
+        placesClient = Places.createClient(this)
+
+        // Initialize the AutocompleteSupportFragment.
+        // Initialize the AutocompleteSupportFragment.
+        val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment?
+
+// Specify the types of place data to return.
+        // Specify the types of place data to return.
+        autocompleteFragment!!.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME))
+
+// Set up a PlaceSelectionListener to handle the response.
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                Log.e("Place", "Place: " + place.name + ", " + place.id)
+            }
+
+            override fun onError(p0: Status) {
+                Log.e("Error", "Place: " + p0)
+            }
+        })
+    }
+
+    fun showDialog(message: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(message)
+        builder.setCancelable(true)
+
+        builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
 }

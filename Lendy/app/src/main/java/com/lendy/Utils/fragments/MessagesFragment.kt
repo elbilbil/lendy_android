@@ -9,8 +9,8 @@ import android.view.*
 import com.lendy.Manager.DataManager
 import com.lendy.Models.Users
 import com.lendy.R
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lendy.Models.Discussion
 import com.lendy.Utils.adapters.MessagesAdapter
 import kotlinx.android.synthetic.main.messages_fragment.*

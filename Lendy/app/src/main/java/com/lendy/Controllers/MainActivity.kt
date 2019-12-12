@@ -4,15 +4,15 @@ import android.Manifest
 import android.app.AlertDialog
 import android.app.Fragment
 import android.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import com.pubnub.api.PubNub
 import com.pubnub.api.PNConfiguration
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import com.google.gson.Gson
@@ -20,10 +20,10 @@ import com.google.gson.JsonObject
 import com.lendy.Manager.DataManager
 import com.lendy.Models.Users
 import com.lendy.Utils.*
-import android.support.design.widget.BottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.view.MenuItem
 import com.lendy.R
-import android.support.v7.widget.DividerItemDecoration
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
 import com.lendy.Utils.adapters.RecyclerAdapter
 import com.lendy.Utils.custom_views.BottomNavigationViewHelper
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     var profileDetailFragment: ProfileDetailFragment? = null
     var contractFragment: ContractFragment? = null
     var messageFragment: MessagesFragment? = null
-    var suppOrderFragment: SuppOrderFragment? = null
+    //var suppOrderFragment: SuppOrderFragment? = null
     var conversationFragment: ConversationFragment? = null
     var homeFragment: HomeFragment? = null
     var reservationFragment: ReservationFragment? = null
@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         homeFragment = HomeFragment()
         addFragmentToActivity(fragmentManager, homeFragment, R.id.activity_main)
 
-        supportFragmentManager
         checkPermission()
         //initPubnub()
 
@@ -280,6 +279,12 @@ class MainActivity : AppCompatActivity() {
         transaction.remove(fragment)
         transaction.commitAllowingStateLoss()
         listOfFragment.remove(fragment)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (tutoFragment != null && tutoFragment!!.isVisible)
+            onBackPressed()
     }
 
     override fun onBackPressed() {

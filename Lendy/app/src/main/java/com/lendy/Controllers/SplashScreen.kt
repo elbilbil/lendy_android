@@ -2,7 +2,7 @@ package com.lendy.Controllers
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -12,8 +12,8 @@ import com.lendy.Utils.DataUtils
 import kotlinx.android.synthetic.main.connect_activity.*
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
-import android.support.v4.app.SupportActivity
-import android.support.v4.app.SupportActivity.ExtraData
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class SplashScreen : AppCompatActivity() {

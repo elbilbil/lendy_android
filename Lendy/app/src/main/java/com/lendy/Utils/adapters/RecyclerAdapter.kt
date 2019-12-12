@@ -5,8 +5,8 @@ import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.gson.Gson
 import com.lendy.Controllers.MainActivity
+import com.lendy.Manager.DataManager
 import com.lendy.Models.Users
 import com.lendy.R
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
@@ -40,10 +41,11 @@ class RecyclerAdapter(val arrayListOfElements: ArrayList<Users>, val activity : 
                 //Faire le Search en cliquant dessus
 
                 if (activity is MainActivity) {
-                    val bundle = Bundle()
-                    bundle.putSerializable("infos", userInfos)
+                    //val bundle = Bundle()
+                    DataManager.SharedData.sharedDetailUser = userInfos
+                    //bundle.putSerializable("infos", userInfos)
                     activity.profileDetailFragment = ProfileDetailFragment()
-                    activity.profileDetailFragment!!.arguments = bundle
+                    //activity.profileDetailFragment!!.arguments = bundle
                     addFragmentToActivity(activity.fragmentManager, activity.profileDetailFragment, R.id.activity_main)
                 }
             }
