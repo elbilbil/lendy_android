@@ -6,6 +6,7 @@ import android.app.Fragment
 import android.app.FragmentManager
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.lendy.Models.Reservation
 import com.lendy.Models.Users
 import com.lendy.R
 import com.lendy.Utils.DataUtils.Companion.addFragmentToActivity
+import com.lendy.Utils.fragments.ContractFragment
 import com.lendy.Utils.fragments.ProfileDetailFragment
 
 /**
@@ -34,13 +36,28 @@ class ReservationAdapter(val arrayListOfReservations: ArrayList<Reservation>, va
 {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        var destinataire : Member? = null
         for (member : Member in arrayListOfReservations[position].members)
         {
            if (!member._id.equals(DataManager.SharedData.sharedUser?._id))
            {
+               destinataire = member
                holder.firstImage?.setImageResource(R.drawable.avatar_placeholder)
                holder.name?.text = member.firstname + " " + member.lastname
            }
+        }
+
+        holder.container.setOnClickListener { _ ->
+            run {
+
+                if (activity is MainActivity) {
+                    //val bundle = Bundle()
+                    if (destinataire != null)
+                        DataManager.SharedData.sharedDetailMember = destinataire
+                    activity.contractFragment = ContractFragment()
+                    addFragmentToActivity(activity.fragmentManager, activity.contractFragment, R.id.activity_main)
+                }
+            }
         }
     }
 

@@ -5,6 +5,7 @@
     android:background="@drawable/bg_login"
     android:clickable="true"
     android:focusable="true"
+    android:padding="40dp"
     android:layout_height="match_parent">
 
     <TextView

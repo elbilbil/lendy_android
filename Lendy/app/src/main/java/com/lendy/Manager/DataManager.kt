@@ -20,6 +20,7 @@ class DataManager
         var sharedDiscussions: ArrayList<Discussion>? = null
         var sharedReservations: ArrayList<Reservation>? = null
         var sharedDetailUser: HashMap<String?, Any?>? = null
+        var sharedDetailMember: Member? = null
         var token: String? = null
     }
 

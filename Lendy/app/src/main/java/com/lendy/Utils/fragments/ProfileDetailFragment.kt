@@ -59,7 +59,7 @@ class ProfileDetailFragment : Fragment() {
           //  }
 
             contacter.setOnClickListener {
-                val sendMessageDialog = SendMessageDialog(activity, user)
+                val sendMessageDialog = SendMessageDialog(activity, user, null)
                 sendMessageDialog.show()
             }
 

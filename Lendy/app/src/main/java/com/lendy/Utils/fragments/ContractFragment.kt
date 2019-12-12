@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lendy.Controllers.MainActivity
+import com.lendy.Manager.DataManager
+import com.lendy.Models.Users
 import com.lendy.R
 import com.lendy.Utils.DataUtils
+import com.lendy.Utils.custom_views.SendMessageDialog
 import kotlinx.android.synthetic.main.contract_fragment.*
 
 class ContractFragment : Fragment()
@@ -27,7 +30,17 @@ class ContractFragment : Fragment()
         this.currentView = view
         this.currentActivity = this.activity
 
-        sign.setOnClickListener {
+        profilname.text = DataManager.SharedData.sharedDetailMember!!.firstname + " " + DataManager.SharedData.sharedDetailMember!!.lastname
+        avis.text = "(" + DataManager.SharedData.sharedDetailMember!!.rating + " avis)"
+        description_name.text = DataManager.SharedData.sharedDetailMember?.ratings?.get(0)?.username!!
+        description.text = DataManager.SharedData.sharedDetailMember?.ratings?.get(0)?.message!!
+
+
+        contacter.setOnClickListener {
+            val sendMessageDialog = SendMessageDialog(activity, null, DataManager.SharedData.sharedDetailMember)
+            sendMessageDialog.show()
+        }
+        /*sign.setOnClickListener {
 
             if (this.currentActivity is MainActivity)
             {
@@ -36,7 +49,7 @@ class ContractFragment : Fragment()
                 activity.fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 DataUtils.addFragmentToActivity(activity.fragmentManager, (this.currentActivity as MainActivity).SuppOrderActivity, R.id.activity_main)*/
             }
-        }
+        }*/
 
         if (this.currentActivity is MainActivity)
             (this.currentActivity as MainActivity).hideBottomNavigation()
